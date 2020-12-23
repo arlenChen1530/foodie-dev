@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.arlenchen.mapper.CategoryMapperCustom">
+    <resultMap id="myCategoryVO" type="com.arlenchen.pojo.vo.CategoryVO">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="type" jdbcType="INTEGER" property="type"/>
+        <result column="fatherId" jdbcType="INTEGER" property="fatherId"/>
+        <!--
+        collection 标签: 用于定义关联的list集合类型的封装规则
+        property 对应三级分类list的属性名
+        ofType  对应集合的类型，三级分类的VO
+        -->
+        <collection property="subCatList" ofType="com.arlenchen.pojo.vo.SubCategoryVO">
+            <id column="subId" jdbcType="INTEGER" property="subId"/>
+            <result column="subName" jdbcType="VARCHAR" property="subName"/>
+            <result column="subType" jdbcType="INTEGER" property="subType"/>
+            <result column="subFatherId" jdbcType="INTEGER" property="subFatherId"/>
+        </collection>
+    </resultMap>
+    <select id="getSubCatLIst" parameterType="int" resultMap="myCategoryVO">
+    SELECT
+        father.id AS id,
+        father.`name` AS name,
+        father.type AS type,
+        father.father_id AS fatherId,
+        child.id AS subId,
+        child.`name` AS subName,
+        child.type AS subType,
+        child.father_id AS subFatherId
+    FROM
+        category father
+        LEFT JOIN category child ON father.id = child.father_id
+    WHERE
+        father.id =#{rooCatId}
+    </select>
+    <resultMap id="myNewItemsVO" type="com.arlenchen.pojo.vo.NewItemsVO">
+        <id column="rootCatId" jdbcType="INTEGER" property="rootCatId"/>
+        <result column="rootCatName" jdbcType="VARCHAR" property="rootCatName"/>
+        <result column="slogan" jdbcType="VARCHAR" property="slogan"/>
+        <result column="catImage" jdbcType="VARCHAR" property="catImage"/>
+        <result column="bgColor" jdbcType="VARCHAR" property="bgColor"/>
+        <!--
+        collection 标签: 用于定义关联的list集合类型的封装规则
+        property 对应三级分类list的属性名
+        ofType  对应集合的类型，三级分类的VO
+        -->
+        <collection property="simpleItemVoList" ofType="com.arlenchen.pojo.vo.SimpleItemVO">
+            <id column="itemId" jdbcType="VARCHAR" property="itemId"/>
+            <result column="itemName" jdbcType="VARCHAR" property="itemName"/>
+            <result column="itemUrl" jdbcType="VARCHAR" property="itemUrl"/>
+            <result column="createdTime" jdbcType="DATE" property="createdTime"/>
+
+        </collection>
+    </resultMap>
+    <select id="getSixNewItemsLazy" resultMap="myNewItemsVO" parameterType="Map">
+    SELECT
+        category.id AS rootCatId,
+        category.`name` AS rootCatName,
+        category.slogan AS slogan,
+        category.cat_image AS catImage,
+        category.bg_color AS bgColor,
+        items.id AS itmeId,
+        items.item_name AS itemName,
+        itemImg.url AS itemUrl,
+        items.created_time AS createdTime
+    FROM
+        category category
+        LEFT JOIN items items ON items.root_cat_id = category.id
+        LEFT JOIN items_img itemImg ON itemImg.item_id = items.id
+    WHERE
+        category.type = 1
+        AND category.id = #{paramsMap.rootCatId}
+        AND itemImg.is_main = 1
+    ORDER BY
+        items.created_time DESC
+        LIMIT 0,6
+    </select>
+</mapper>

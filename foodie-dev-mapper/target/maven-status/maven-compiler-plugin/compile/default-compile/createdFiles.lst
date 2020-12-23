@@ -1,0 +1,15 @@
+com/arlenchen/mapper/ItemsSpecMapper.class
+com/arlenchen/mapper/ItemsMapper.class
+com/arlenchen/mapper/PdmanDbVersionMapper.class
+com/arlenchen/mapper/UserAddressMapper.class
+com/arlenchen/mapper/ItemsImgMapper.class
+com/arlenchen/mapper/StuMapper.class
+com/arlenchen/my/mapper/MyMapper.class
+com/arlenchen/mapper/OrderStatusMapper.class
+com/arlenchen/mapper/UsersMapper.class
+com/arlenchen/mapper/CategoryMapper.class
+com/arlenchen/mapper/ItemsParamMapper.class
+com/arlenchen/mapper/CarouselMapper.class
+com/arlenchen/mapper/OrdersMapper.class
+com/arlenchen/mapper/ItemsCommentsMapper.class
+com/arlenchen/mapper/OrderItemsMapper.class

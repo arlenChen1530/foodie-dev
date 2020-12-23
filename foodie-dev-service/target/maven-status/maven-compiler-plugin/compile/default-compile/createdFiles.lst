@@ -1,0 +1,6 @@
+com/arlenchen/service/UserService.class
+com/arlenchen/service/StuService.class
+com/arlenchen/service/impl/UserServiceImpl.class
+com/arlenchen/service/impl/CarouselServiceImpl.class
+com/arlenchen/service/CarouselService.class
+com/arlenchen/service/impl/StuServiceImpl.class
