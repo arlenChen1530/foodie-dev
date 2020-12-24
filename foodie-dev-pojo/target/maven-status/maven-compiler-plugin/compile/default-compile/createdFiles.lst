@@ -10,6 +10,7 @@ com/arlenchen/pojo/Items.class
 com/arlenchen/pojo/Orders.class
 com/arlenchen/pojo/ItemsComments.class
 com/arlenchen/pojo/ItemsParam.class
+com/arlenchen/pojo/vo/CommentLevelCountsVO.class
 com/arlenchen/pojo/Category.class
 com/arlenchen/pojo/vo/SubCategoryVO.class
 com/arlenchen/pojo/Users.class

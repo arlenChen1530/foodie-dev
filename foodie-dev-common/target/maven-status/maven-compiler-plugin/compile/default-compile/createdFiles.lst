@@ -6,6 +6,7 @@ org/n3r/idworker/utils/Ip.class
 org/n3r/idworker/RandomCodeStrategy.class
 org/n3r/idworker/utils/Serializes.class
 org/n3r/idworker/WorkerIdStrategy.class
+com/arlenchen/enums/CommentLevel.class
 org/n3r/idworker/InvalidSystemClock.class
 com/arlenchen/utils/DateUtil.class
 com/arlenchen/enums/Sex.class

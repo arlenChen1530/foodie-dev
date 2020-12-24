@@ -5,8 +5,13 @@ import com.arlenchen.pojo.Items;
 import com.arlenchen.pojo.ItemsImg;
 import com.arlenchen.pojo.ItemsParam;
 import com.arlenchen.pojo.ItemsSpec;
+import com.arlenchen.pojo.vo.CommentLevelCountsVO;
+import com.arlenchen.pojo.vo.ItemCommentVO;
+import com.arlenchen.utils.PageGridResult;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 商品
@@ -43,4 +48,46 @@ public interface ItemService {
      * @return 产品参数
      */
     ItemsParam queryItemParam(String itemId);
+
+    /**
+     * 获取评价数量
+     *
+     * @param itemId 商品id
+     * @return 评价数量
+     */
+    CommentLevelCountsVO queryCommentCounts(String itemId);
+
+    /**
+     *
+     * 根据商品id和级别查询商品评价
+     *
+     * @param itemId 商品id
+     * @param level  级别
+     * @param page 第几页
+     * @param pageSize 每页数量
+     * @return List
+     */
+    PageGridResult queryPageComments(String itemId, Integer level, Integer page, Integer pageSize);
+
+    /**
+     * 根据搜索条件查询商品
+     *
+     * @param keywords 关键字
+     * @param sort     排序方式
+     * @param page     页数
+     * @param pageSize 每页数量
+     * @return List
+     */
+    PageGridResult searchItems(String keywords, String sort, Integer page, Integer pageSize);
+
+    /**
+     * 根据三级分类查询商品
+     *
+     * @param catId 三级分类Id
+     * @param sort     排序方式
+     * @param page     页数
+     * @param pageSize 每页数量
+     * @return List
+     */
+    PageGridResult searchItemsByThirdCat(Integer catId, String sort, Integer page, Integer pageSize);
 }

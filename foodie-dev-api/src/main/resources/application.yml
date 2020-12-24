@@ -56,3 +56,7 @@ mapper:
   mappers: com.arlenchen.my.mapper.MyMapper
   not-empty: false  #在进行数据库操作的时候，判断表达式userName！=null，是否追加username！=''
   identity: MYSQL   #数据库方言
+#分页插件配置
+pagehelper:
+  support-methods-arguments: true
+  helper-dialect: mysql
