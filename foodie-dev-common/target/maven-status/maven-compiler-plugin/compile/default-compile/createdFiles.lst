@@ -1,4 +1,5 @@
 org/n3r/idworker/DayCode.class
+com/arlenchen/utils/CookieUtils.class
 org/n3r/idworker/strategy/DefaultRandomCodeStrategy.class
 org/n3r/idworker/strategy/DefaultWorkerIdStrategy$2.class
 com/arlenchen/utils/JsonResult.class
@@ -7,6 +8,7 @@ org/n3r/idworker/RandomCodeStrategy.class
 org/n3r/idworker/utils/Serializes.class
 org/n3r/idworker/WorkerIdStrategy.class
 com/arlenchen/enums/CommentLevel.class
+com/arlenchen/utils/MobileEmailUtils.class
 org/n3r/idworker/InvalidSystemClock.class
 com/arlenchen/utils/DateUtil.class
 com/arlenchen/enums/Sex.class
@@ -17,6 +19,7 @@ org/n3r/idworker/IdWorker.class
 org/n3r/idworker/Test.class
 org/n3r/idworker/utils/HttpReq.class
 org/n3r/idworker/utils/Props.class
+com/arlenchen/utils/JsonUtils.class
 org/n3r/idworker/utils/Utils.class
 org/n3r/idworker/utils/Props$Silent.class
 org/n3r/idworker/strategy/FileLock.class

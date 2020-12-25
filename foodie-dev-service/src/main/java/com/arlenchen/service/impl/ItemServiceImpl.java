@@ -6,6 +6,7 @@ import com.arlenchen.pojo.*;
 import com.arlenchen.pojo.vo.CommentLevelCountsVO;
 import com.arlenchen.pojo.vo.ItemCommentVO;
 import com.arlenchen.pojo.vo.SearchItemsVO;
+import com.arlenchen.pojo.vo.ShopCatVO;
 import com.arlenchen.service.ItemService;
 import com.arlenchen.utils.DesensitizationUtil;
 import com.arlenchen.utils.PageGridResult;
@@ -17,9 +18,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import tk.mybatis.mapper.entity.Example;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class ItemServiceImpl implements ItemService {
@@ -179,6 +178,20 @@ public class ItemServiceImpl implements ItemService {
         PageHelper.startPage(page,pageSize);
         List<SearchItemsVO> list=itemsMapperCustom.searchItemsByThirdCat(map);
         return  buildPageGridResult(list,page);
+    }
+    /**
+     * 根据规格id查询购物车中最新的商品数据（用于刷新渲染购物车中的商品数据）
+     *
+     * @param specIds 规格id
+     * @return List<ShopCatVO> 购物车数据
+     */
+    @Transactional(propagation = Propagation.SUPPORTS)
+    @Override
+    public List<ShopCatVO> queryItemsBySpecIds(String specIds) {
+        String[] ids=specIds.split(",");
+        List<String> idList=new ArrayList<>();
+        Collections.addAll(idList,ids);
+        return itemsMapperCustom.queryItemsBySpecIds(idList);
     }
 
     @Transactional(propagation = Propagation.SUPPORTS)

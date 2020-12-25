@@ -6,6 +6,7 @@ import com.arlenchen.pojo.ItemsParam;
 import com.arlenchen.pojo.ItemsSpec;
 import com.arlenchen.pojo.vo.CommentLevelCountsVO;
 import com.arlenchen.pojo.vo.ItemInfoVO;
+import com.arlenchen.pojo.vo.ShopCatVO;
 import com.arlenchen.service.ItemService;
 import com.arlenchen.utils.JsonResult;
 import com.arlenchen.utils.PageGridResult;
@@ -103,5 +104,12 @@ public class ItemsController extends BaseController {
         }
         PageGridResult pageGridResult = itemService.searchItemsByThirdCat(catId, sort, page, pageSize);
         return JsonResult.ok(pageGridResult);
+    }
+
+    @ApiOperation(value = "根据规格id查询最新的商品数据", notes = "根据规格id查询最新的商品数据", httpMethod = "GET")
+    @GetMapping("/refresh")
+    public JsonResult refresh(@ApiParam(name = "specIds", value = "规格id", required = true,example = "('1001','1002')") @RequestParam() String specIds) {
+        List<ShopCatVO> list = itemService.queryItemsBySpecIds(specIds);
+        return JsonResult.ok(list);
     }
 }

@@ -2,6 +2,7 @@ package com.arlenchen.mapper;
 
 import com.arlenchen.pojo.vo.ItemCommentVO;
 import com.arlenchen.pojo.vo.SearchItemsVO;
+import com.arlenchen.pojo.vo.ShopCatVO;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -31,4 +32,6 @@ public interface ItemsMapperCustom {
      * @return List
      */
     List<SearchItemsVO> searchItemsByThirdCat(@Param("paramsMap") Map<String, Object> paramsMap);
+
+    List<ShopCatVO> queryItemsBySpecIds(@Param("paramsList") List<String>paramsList);
 }

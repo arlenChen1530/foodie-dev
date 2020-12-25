@@ -74,6 +74,26 @@
 			</otherwise>
 		</choose>
     </select>
+    <select id="queryItemsBySpecIds" parameterType="List" resultType="com.arlenchen.pojo.vo.ShopCatVO">
+    SELECT
+		item.id AS itemId,
+		item.item_name AS itemName,
+		itemImg.url AS itemImgUrl,
+		itemSpec.id AS specId,
+		itemSpec.NAME AS specName,
+		itemSpec.price_discount AS priceDiscount,
+		itemSpec.price_normal AS priceNormal
+	FROM
+		items_spec itemSpec
+		LEFT JOIN items item ON item.id = itemSpec.item_id
+		LEFT JOIN items_img itemImg ON itemImg.item_id = itemSpec.item_id
+	WHERE
+		itemImg.is_main = 1
+		AND itemSpec.id IN
+		<foreach collection="paramsList" index="index" item="specId" open="(" separator="," close=")">
+			#{specId}
+		</foreach>
+    </select>
 <!--	k：默认，代表默认排序，根据name-->
 <!--	c：根据销量排序-->
 <!--	p：根据价格排序-->
