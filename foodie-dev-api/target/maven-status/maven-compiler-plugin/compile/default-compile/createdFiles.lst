@@ -3,7 +3,11 @@ com/arlenchen/Application.class
 com/arlenchen/controller/HellController.class
 com/arlenchen/controller/StuFooController.class
 com/arlenchen/controller/AddressController.class
+com/arlenchen/controller/BaseController.class
 com/arlenchen/controller/ShopCatController.class
+com/arlenchen/config/CorsConfig.class
 com/arlenchen/controller/UserController.class
 com/arlenchen/config/Swagger2.class
+com/arlenchen/aspect/ServiceLogAspect.class
 com/arlenchen/controller/ItemsController.class
+com/arlenchen/controller/OrderController.class

@@ -14,11 +14,14 @@ import com.arlenchen.pojo.bo.SubmitOrderBo;
 import com.arlenchen.service.ItemsSpecService;
 import org.n3r.idworker.Sid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
+@Service
 public class OrderAppServiceImpl implements OrderAppService {
     @Autowired
     private Sid sid;
@@ -36,9 +39,14 @@ public class OrderAppServiceImpl implements OrderAppService {
     private ItemImgAppService itemImgAppService;
     @Autowired
     private ItemAppService itemAppService;
-
+    /**
+     * 用户下单
+     *
+     * @param submitOrderBo 下单数据
+     */
+    @Transactional(propagation = Propagation.REQUIRED)
     @Override
-    public void createOrder(SubmitOrderBo submitOrderBo) {
+    public String createOrder(SubmitOrderBo submitOrderBo) {
         String userId = submitOrderBo.getUserId();
         String itemSpecIds = submitOrderBo.getItemSpecIds();
         String addressId = submitOrderBo.getAddressId();
@@ -74,6 +82,23 @@ public class OrderAppServiceImpl implements OrderAppService {
         waitPayOrderStatus.setOrderStatus(OrderStatusEnum.WAIT_PAY.type);
         ordersMapper.insert(orders);
         orderStatusMapper.insert(waitPayOrderStatus);
+        return  orderId;
+    }
+
+    /**
+     * 修改订单状态
+     *
+     * @param orderId     订单Id
+     * @param orderStatus 订单状态
+     */
+    @Transactional(propagation = Propagation.REQUIRED)
+    @Override
+    public void updateOrderStatus(String orderId, Integer orderStatus) {
+        OrderStatus paidStatus=new OrderStatus();
+        paidStatus.setOrderId(orderId);
+        paidStatus.setOrderStatus(orderStatus);
+        paidStatus.setPayTime(new Date());
+        orderStatusMapper.updateByPrimaryKeySelective(paidStatus);
     }
 
     /**
@@ -81,7 +106,6 @@ public class OrderAppServiceImpl implements OrderAppService {
      *
      * @param specList 商品规格信息
      * @param orders   订单
-     * @return List
      */
     private void createOrderItemsList(List<ItemsSpec> specList, Orders orders) {
         //2.1根据规格id，查询规格获取价格
@@ -113,6 +137,6 @@ public class OrderAppServiceImpl implements OrderAppService {
             itemsSpecService.decreaseItemSpecStock(itemsSpec.getId(),buyCount);
         }
         orders.setTotalAmount(totalAmount);
-        orders.setPostAmount(realPayAmount);
+        orders.setRealPayAmount(realPayAmount);
     }
 }

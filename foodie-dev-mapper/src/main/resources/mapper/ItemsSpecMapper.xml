@@ -29,7 +29,7 @@
     FROM
 	    items_spec itemsSpec
     WHERE
-	    itemsSpec.id
+	    itemsSpec.id in
 	    <foreach collection="paramsList" item="specId" index="index"  open="(" close=")" separator=",">
           #{specId}
         </foreach>

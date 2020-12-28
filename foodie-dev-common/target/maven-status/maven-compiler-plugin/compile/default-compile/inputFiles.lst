@@ -23,7 +23,9 @@
 /Users/arlenchen/Documents/project/foodie-dev/foodie-dev-common/src/main/java/com/arlenchen/utils/MobileEmailUtils.java
 /Users/arlenchen/Documents/project/foodie-dev/foodie-dev-common/src/main/java/org/n3r/idworker/utils/HttpReq.java
 /Users/arlenchen/Documents/project/foodie-dev/foodie-dev-common/src/main/java/org/n3r/idworker/DayCode.java
+/Users/arlenchen/Documents/project/foodie-dev/foodie-dev-common/src/main/java/com/arlenchen/enums/OrderStatusEnum.java
 /Users/arlenchen/Documents/project/foodie-dev/foodie-dev-common/src/main/java/org/n3r/idworker/Id.java
 /Users/arlenchen/Documents/project/foodie-dev/foodie-dev-common/src/main/java/org/n3r/idworker/IdWorker.java
+/Users/arlenchen/Documents/project/foodie-dev/foodie-dev-common/src/main/java/com/arlenchen/enums/YesOrNo.java
 /Users/arlenchen/Documents/project/foodie-dev/foodie-dev-common/src/main/java/com/arlenchen/enums/CommentLevel.java
 /Users/arlenchen/Documents/project/foodie-dev/foodie-dev-common/src/main/java/org/n3r/idworker/utils/IPv4Utils.java
