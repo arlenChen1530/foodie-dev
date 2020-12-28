@@ -1,4 +1,4 @@
-package com.arlenchen.service;
+package com.arlenchen.appservice;
 
 import com.arlenchen.pojo.Category;
 import com.arlenchen.pojo.vo.CategoryVO;
@@ -6,7 +6,7 @@ import com.arlenchen.pojo.vo.NewItemsVO;
 
 import java.util.List;
 
-public interface CategoryService {
+public interface CategoryAppService {
     /**
      * 查询所有一级分类
      *

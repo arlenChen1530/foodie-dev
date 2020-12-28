@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<module org.jetbrains.idea.maven.project.MavenProjectsManager.isMavenModule="true" version="4">
+<module org.jetbrains.idea.maven.project.MavenProjectsManager.isMavenModule="true" type="JAVA_MODULE" version="4">
   <component name="FacetManager">
     <facet type="Spring" name="Spring">
       <configuration />
@@ -25,11 +25,10 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="module" module-name="foodie-dev-service" />
     <orderEntry type="module" module-name="foodie-dev-mapper" />
     <orderEntry type="module" module-name="foodie-dev-pojo" />
     <orderEntry type="module" module-name="foodie-dev-common" />
-    <orderEntry type="module" module-name="appservice" />
+    <orderEntry type="module" module-name="foodie-dev-service" />
     <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-starter:2.1.7.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot:2.1.7.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-context:5.1.9.RELEASE" level="project" />

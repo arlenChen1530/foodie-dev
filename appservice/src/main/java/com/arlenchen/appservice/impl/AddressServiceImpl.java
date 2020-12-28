@@ -1,10 +1,10 @@
-package com.arlenchen.service.impl;
+package com.arlenchen.appservice.impl;
 
+import com.arlenchen.appservice.AddressAppService;
 import com.arlenchen.enums.YesOrNo;
 import com.arlenchen.mapper.UserAddressMapper;
 import com.arlenchen.pojo.UserAddress;
 import com.arlenchen.pojo.bo.AddressBO;
-import com.arlenchen.service.AddressService;
 import org.n3r.idworker.Sid;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +16,7 @@ import java.util.Date;
 import java.util.List;
 
 @Service
-public class AddressServiceImpl implements AddressService {
+public class AddressServiceImpl implements AddressAppService {
     private final UserAddressMapper userAddressMapper;
 
     private final Sid sid;
@@ -99,6 +99,7 @@ public class AddressServiceImpl implements AddressService {
      * @param userId    用户id
      * @param addressId 地址id
      */
+    @Transactional(propagation = Propagation.REQUIRED)
     @Override
     public void setDefaultAddress(String userId, String addressId) {
         UserAddress userAddress = new UserAddress();
@@ -112,5 +113,20 @@ public class AddressServiceImpl implements AddressService {
         userAddress.setIsDefault(YesOrNo.YES.type);
         userAddress.setUpdatedTime(new Date());
         userAddressMapper.updateByPrimaryKeySelective(userAddress);
+    }
+    /**
+     * 根据用户ID和地址id查询地址
+     *
+     * @param userId    用户id
+     * @param addressId 地址id
+     * @return 地址
+     */
+    @Transactional(propagation = Propagation.SUPPORTS)
+    @Override
+    public UserAddress queryUserAddress(String userId, String addressId) {
+        UserAddress userAddress = new UserAddress();
+        userAddress.setUserId(userId);
+        userAddress.setId(addressId);
+        return userAddressMapper.selectOne(userAddress);
     }
 }

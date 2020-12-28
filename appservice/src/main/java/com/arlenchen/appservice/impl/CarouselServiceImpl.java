@@ -1,8 +1,8 @@
-package com.arlenchen.service.impl;
+package com.arlenchen.appservice.impl;
 
+import com.arlenchen.appservice.CarouselAppService;
 import com.arlenchen.mapper.CarouselMapper;
 import com.arlenchen.pojo.Carousel;
-import com.arlenchen.service.CarouselService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -12,7 +12,7 @@ import tk.mybatis.mapper.entity.Example;
 import java.util.List;
 
 @Service
-public class CarouselServiceImpl  implements CarouselService {
+public class CarouselServiceImpl  implements CarouselAppService {
 
     @Autowired
     private CarouselMapper carouselMapper;

@@ -1,5 +1,6 @@
 package com.arlenchen.controller;
 
+import com.arlenchen.appservice.ItemAppService;
 import com.arlenchen.pojo.Items;
 import com.arlenchen.pojo.ItemsImg;
 import com.arlenchen.pojo.ItemsParam;
@@ -7,7 +8,6 @@ import com.arlenchen.pojo.ItemsSpec;
 import com.arlenchen.pojo.vo.CommentLevelCountsVO;
 import com.arlenchen.pojo.vo.ItemInfoVO;
 import com.arlenchen.pojo.vo.ShopCatVO;
-import com.arlenchen.service.ItemService;
 import com.arlenchen.utils.JsonResult;
 import com.arlenchen.utils.PageGridResult;
 import io.swagger.annotations.Api;
@@ -21,10 +21,10 @@ import java.util.List;
 @RestController
 @RequestMapping("items")
 public class ItemsController extends BaseController {
-    private final ItemService itemService;
+    private final ItemAppService itemAppService;
 
-    public ItemsController(ItemService itemService) {
-        this.itemService = itemService;
+    public ItemsController(ItemAppService itemAppService) {
+        this.itemAppService = itemAppService;
     }
 
     @ApiOperation(value = "查询商品详情", notes = "查询商品详情", httpMethod = "GET")
@@ -33,10 +33,10 @@ public class ItemsController extends BaseController {
         if (itemId == null) {
             return JsonResult.errorMsg("");
         }
-        Items items = itemService.queryItemById(itemId);
-        List<ItemsImg> itemsImgList = itemService.queryItemImgList(itemId);
-        List<ItemsSpec> itemsSpecList = itemService.queryItemSpecList(itemId);
-        ItemsParam itemsParam = itemService.queryItemParam(itemId);
+        Items items = itemAppService.queryItemById(itemId);
+        List<ItemsImg> itemsImgList = itemAppService.queryItemImgList(itemId);
+        List<ItemsSpec> itemsSpecList = itemAppService.queryItemSpecList(itemId);
+        ItemsParam itemsParam = itemAppService.queryItemParam(itemId);
         ItemInfoVO itemsInfoVO = new ItemInfoVO();
         itemsInfoVO.setItems(items);
         itemsInfoVO.setItemImgList(itemsImgList);
@@ -51,7 +51,7 @@ public class ItemsController extends BaseController {
         if (itemId == null) {
             return JsonResult.errorMsg("");
         }
-        CommentLevelCountsVO commentLevelCountsVO = itemService.queryCommentCounts(itemId);
+        CommentLevelCountsVO commentLevelCountsVO = itemAppService.queryCommentCounts(itemId);
         return JsonResult.ok(commentLevelCountsVO);
     }
 
@@ -70,7 +70,7 @@ public class ItemsController extends BaseController {
         if (pageSize == null) {
             pageSize = COMMENT_PAGE_SIZE;
         }
-        PageGridResult pageGridResult = itemService.queryPageComments(itemId, level, page, pageSize);
+        PageGridResult pageGridResult = itemAppService.queryPageComments(itemId, level, page, pageSize);
         return JsonResult.ok(pageGridResult);
     }
 
@@ -86,7 +86,7 @@ public class ItemsController extends BaseController {
         if (pageSize == null) {
             pageSize = COMMENT_PAGE_SIZE;
         }
-        PageGridResult pageGridResult = itemService.searchItems(keywords, sort, page, pageSize);
+        PageGridResult pageGridResult = itemAppService.searchItems(keywords, sort, page, pageSize);
         return JsonResult.ok(pageGridResult);
     }
 
@@ -102,14 +102,14 @@ public class ItemsController extends BaseController {
         if (pageSize == null) {
             pageSize = COMMENT_PAGE_SIZE;
         }
-        PageGridResult pageGridResult = itemService.searchItemsByThirdCat(catId, sort, page, pageSize);
+        PageGridResult pageGridResult = itemAppService.searchItemsByThirdCat(catId, sort, page, pageSize);
         return JsonResult.ok(pageGridResult);
     }
 
     @ApiOperation(value = "根据规格id查询最新的商品数据", notes = "根据规格id查询最新的商品数据", httpMethod = "GET")
     @GetMapping("/refresh")
     public JsonResult refresh(@ApiParam(name = "specIds", value = "规格id", required = true,example = "('1001','1002')") @RequestParam() String specIds) {
-        List<ShopCatVO> list = itemService.queryItemsBySpecIds(specIds);
+        List<ShopCatVO> list = itemAppService.queryItemsBySpecIds(specIds);
         return JsonResult.ok(list);
     }
 }

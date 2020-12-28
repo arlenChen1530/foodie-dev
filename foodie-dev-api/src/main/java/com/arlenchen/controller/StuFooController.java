@@ -1,6 +1,6 @@
 package com.arlenchen.controller;
 
-import com.arlenchen.service.StuService;
+import com.arlenchen.appservice.StuAppService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -10,8 +10,12 @@ import springfox.documentation.annotations.ApiIgnore;
 @ApiIgnore
 @RestController
 public class StuFooController {
+    private final StuAppService stuService;
+
     @Autowired
-    private StuService stuService;
+    public StuFooController(StuAppService stuService) {
+        this.stuService = stuService;
+    }
 
     @GetMapping("/getStu")
     public Object hello(int id) {

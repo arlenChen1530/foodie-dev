@@ -1,8 +1,8 @@
 package com.arlenchen.controller;
 
+import com.arlenchen.appservice.UserAppService;
 import com.arlenchen.pojo.Users;
 import com.arlenchen.pojo.bo.UserBO;
-import com.arlenchen.service.UserService;
 import com.arlenchen.utils.CookieUtils;
 import com.arlenchen.utils.JsonResult;
 import com.arlenchen.utils.JsonUtils;
@@ -20,10 +20,10 @@ import javax.servlet.http.HttpServletResponse;
 @RestController
 @RequestMapping("passport")
 public class UserController {
-    private final UserService userService;
+    private final UserAppService userService;
 
     @Autowired
-    public UserController(UserService userService) {
+    public UserController(UserAppService userService) {
         this.userService = userService;
     }
 

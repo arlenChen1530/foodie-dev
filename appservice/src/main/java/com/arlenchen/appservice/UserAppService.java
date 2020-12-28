@@ -1,10 +1,10 @@
-package com.arlenchen.service;
+package com.arlenchen.appservice;
 
 
 import com.arlenchen.pojo.Users;
 import com.arlenchen.pojo.bo.UserBO;
 
-public interface UserService {
+public interface UserAppService {
     boolean queryUserNameIsExist(String userName);
 
     /**

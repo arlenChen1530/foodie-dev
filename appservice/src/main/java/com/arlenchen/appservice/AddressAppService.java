@@ -1,11 +1,12 @@
-package com.arlenchen.service;
+package com.arlenchen.appservice;
+
 
 import com.arlenchen.pojo.UserAddress;
 import com.arlenchen.pojo.bo.AddressBO;
 
 import java.util.List;
 
-public interface AddressService {
+public interface AddressAppService {
     /**
      * 根据用户id查询所有收货地址
      *
@@ -43,4 +44,13 @@ public interface AddressService {
      * @param addressId 地址id
      */
     void setDefaultAddress(String userId, String addressId);
+
+    /**
+     * 根据用户ID和地址id查询地址
+     *
+     * @param userId    用户id
+     * @param addressId 地址id
+     * @return 地址
+     */
+    UserAddress queryUserAddress(String userId, String addressId);
 }

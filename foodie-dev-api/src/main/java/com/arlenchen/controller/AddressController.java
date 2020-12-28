@@ -1,7 +1,7 @@
 package com.arlenchen.controller;
 
+import com.arlenchen.appservice.AddressAppService;
 import com.arlenchen.pojo.bo.AddressBO;
-import com.arlenchen.service.AddressService;
 import com.arlenchen.utils.JsonResult;
 import com.arlenchen.utils.MobileEmailUtils;
 import io.swagger.annotations.Api;
@@ -21,11 +21,11 @@ import javax.servlet.http.HttpServletResponse;
 @RestController
 @RequestMapping("address")
 public class AddressController {
-    private final AddressService addressService;
+    private final AddressAppService addressAppService;
 
     @Autowired
-    public AddressController(AddressService addressService) {
-        this.addressService = addressService;
+    public AddressController(AddressAppService addressAppService) {
+        this.addressAppService = addressAppService;
     }
 
     /**
@@ -43,7 +43,7 @@ public class AddressController {
         if (StringUtils.isBlank(useId)) {
             return JsonResult.errorMsg("");
         }
-        return JsonResult.ok(addressService.queryAll(useId));
+        return JsonResult.ok(addressAppService.queryAll(useId));
     }
 
     @ApiOperation(value = "新增收货地址", notes = "新增收货地址", httpMethod = "POST")
@@ -57,7 +57,7 @@ public class AddressController {
         if (!jsonResult.isOK()) {
             return jsonResult;
         }
-        addressService.addNewUserAddress(addressBO);
+        addressAppService.addNewUserAddress(addressBO);
         return JsonResult.ok();
     }
 
@@ -72,7 +72,7 @@ public class AddressController {
         if (!jsonResult.isOK()) {
             return jsonResult;
         }
-        addressService.updateNewUserAddress(addressBO);
+        addressAppService.updateNewUserAddress(addressBO);
         return JsonResult.ok();
     }
 
@@ -85,7 +85,7 @@ public class AddressController {
         if (StringUtils.isBlank(userId)||StringUtils.isBlank(userId)) {
             return JsonResult.errorMsg("");
         }
-        addressService.deleteAddress(userId,addressId);
+        addressAppService.deleteAddress(userId,addressId);
         return JsonResult.ok();
     }
     @ApiOperation(value = "设置默认收货地址", notes = "设置默认收货地址", httpMethod = "POST")
@@ -97,7 +97,7 @@ public class AddressController {
         if (StringUtils.isBlank(userId)||StringUtils.isBlank(userId)) {
             return JsonResult.errorMsg("");
         }
-        addressService.setDefaultAddress(userId,addressId);
+        addressAppService.setDefaultAddress(userId,addressId);
         return JsonResult.ok();
     }
 

@@ -1,10 +1,10 @@
-package com.arlenchen.service.impl;
+package com.arlenchen.appservice.impl;
 
+import com.arlenchen.appservice.UserAppService;
 import com.arlenchen.enums.Sex;
 import com.arlenchen.mapper.UsersMapper;
 import com.arlenchen.pojo.Users;
 import com.arlenchen.pojo.bo.UserBO;
-import com.arlenchen.service.UserService;
 import com.arlenchen.utils.DateUtil;
 import com.arlenchen.utils.MD5Utils;
 import org.n3r.idworker.Sid;
@@ -17,7 +17,7 @@ import tk.mybatis.mapper.entity.Example;
 import java.util.Date;
 
 @Service
-public class UserServiceImpl implements UserService {
+public class UserAppServiceImpl implements UserAppService {
 
     @Autowired
     private UsersMapper usersMapper;

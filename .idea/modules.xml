@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/appservice/appservice.iml" filepath="$PROJECT_DIR$/appservice/appservice.iml" />
       <module fileurl="file://$PROJECT_DIR$/foodie-dev.iml" filepath="$PROJECT_DIR$/foodie-dev.iml" />
       <module fileurl="file://$PROJECT_DIR$/foodie-dev-api/foodie-dev-api.iml" filepath="$PROJECT_DIR$/foodie-dev-api/foodie-dev-api.iml" />
       <module fileurl="file://$PROJECT_DIR$/foodie-dev-common/foodie-dev-common.iml" filepath="$PROJECT_DIR$/foodie-dev-common/foodie-dev-common.iml" />

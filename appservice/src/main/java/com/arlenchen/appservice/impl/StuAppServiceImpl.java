@@ -1,15 +1,15 @@
-package com.arlenchen.service.impl;
+package com.arlenchen.appservice.impl;
 
+import com.arlenchen.appservice.StuAppService;
 import com.arlenchen.mapper.StuMapper;
 import com.arlenchen.pojo.Stu;
-import com.arlenchen.service.StuService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
-public class StuServiceImpl implements StuService {
+public class StuAppServiceImpl implements StuAppService {
     @Autowired
     private StuMapper stuMapper;
     //支持查询就ok

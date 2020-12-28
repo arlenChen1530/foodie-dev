@@ -6,14 +6,16 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="foodie-dev-pojo" />
         <module name="foodie-dev-common" />
+        <module name="foodie-dev-pojo" />
+        <module name="appservice" />
         <module name="foodie-dev-api" />
         <module name="foodie-dev-mapper" />
         <module name="foodie-dev-service" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="appservice" target="1.8" />
       <module name="foodie-dev" target="1.8" />
       <module name="foodie-dev-api" target="1.8" />
       <module name="foodie-dev-common" target="1.8" />
@@ -24,6 +26,7 @@
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="appservice" options="-parameters" />
       <module name="foodie-dev-api" options="-parameters" />
       <module name="foodie-dev-common" options="-parameters" />
       <module name="foodie-dev-mapper" options="-parameters" />

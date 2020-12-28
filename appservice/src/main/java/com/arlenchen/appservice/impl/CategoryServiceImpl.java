@@ -1,11 +1,11 @@
-package com.arlenchen.service.impl;
+package com.arlenchen.appservice.impl;
 
+import com.arlenchen.appservice.CategoryAppService;
 import com.arlenchen.mapper.CategoryMapper;
 import com.arlenchen.mapper.CategoryMapperCustom;
 import com.arlenchen.pojo.Category;
 import com.arlenchen.pojo.vo.CategoryVO;
 import com.arlenchen.pojo.vo.NewItemsVO;
-import com.arlenchen.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Map;
 
 @Service
-public class CategoryServiceImpl implements CategoryService {
+public class CategoryServiceImpl implements CategoryAppService {
 
     @Autowired
     private CategoryMapper categoryMapper;

@@ -15,4 +15,24 @@
     <result column="created_time" jdbcType="TIMESTAMP" property="createdTime" />
     <result column="updated_time" jdbcType="TIMESTAMP" property="updatedTime" />
   </resultMap>
+  <select id="ListByIds" parameterType="List" resultMap="BaseResultMap">
+    SELECT
+	    itemsSpec.id,
+	    itemsSpec.item_id,
+	    itemsSpec.name,
+	    itemsSpec.stock,
+	    itemsSpec.discounts,
+	    itemsSpec.price_discount,
+	    itemsSpec.price_normal,
+	    itemsSpec.created_time,
+	    itemsSpec.updated_time
+    FROM
+	    items_spec itemsSpec
+    WHERE
+	    itemsSpec.id
+	    <foreach collection="paramsList" item="specId" index="index"  open="(" close=")" separator=",">
+          #{specId}
+        </foreach>
+  </select>
+
 </mapper>

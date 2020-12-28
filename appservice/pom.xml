@@ -9,22 +9,23 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>foodie-dev-api</artifactId>
+    <artifactId>foodie-dev-appservice</artifactId>
 
     <!--    建立依赖-->
     <dependencies>
-        <!--        mapper依赖里pojo，pojo依赖了common，mapper是可以使用common中的相应的方法的
+        <!--        mapper依赖了pojo，pojo依赖了common，mapper是可以使用common中的相应的方法的
         -->
+        <dependency>
+            <groupId>com.project1</groupId>
+            <artifactId>foodie-dev-mapper</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
         <dependency>
             <groupId>com.project1</groupId>
             <artifactId>foodie-dev-service</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
-        <dependency>
-            <groupId>com.project1</groupId>
-            <artifactId>foodie-dev-appservice</artifactId>
-            <version>1.0-SNAPSHOT</version>
-        </dependency>
     </dependencies>
+
 
 </project>

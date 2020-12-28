@@ -1,8 +1,8 @@
-package com.arlenchen.service;
+package com.arlenchen.appservice;
 
 import com.arlenchen.pojo.Stu;
 
-public interface StuService {
+public interface StuAppService {
     Stu getStuInfo(int id);
 
     void saveStu();
