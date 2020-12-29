@@ -10,7 +10,9 @@ import com.arlenchen.mapper.OrderItemsMapper;
 import com.arlenchen.mapper.OrderStatusMapper;
 import com.arlenchen.mapper.OrdersMapper;
 import com.arlenchen.pojo.*;
+import com.arlenchen.pojo.bo.MerchantOrdersBO;
 import com.arlenchen.pojo.bo.SubmitOrderBo;
+import com.arlenchen.pojo.vo.OrderVO;
 import com.arlenchen.service.ItemsSpecService;
 import org.n3r.idworker.Sid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,7 +48,7 @@ public class OrderAppServiceImpl implements OrderAppService {
      */
     @Transactional(propagation = Propagation.REQUIRED)
     @Override
-    public String createOrder(SubmitOrderBo submitOrderBo) {
+    public OrderVO createOrder(SubmitOrderBo submitOrderBo) {
         String userId = submitOrderBo.getUserId();
         String itemSpecIds = submitOrderBo.getItemSpecIds();
         String addressId = submitOrderBo.getAddressId();
@@ -82,7 +84,17 @@ public class OrderAppServiceImpl implements OrderAppService {
         waitPayOrderStatus.setOrderStatus(OrderStatusEnum.WAIT_PAY.type);
         ordersMapper.insert(orders);
         orderStatusMapper.insert(waitPayOrderStatus);
-        return  orderId;
+        //4.创建商户订单，用于传给支付中心
+        MerchantOrdersBO merchantOrdersBO =new MerchantOrdersBO();
+        merchantOrdersBO.setAmount(orders.getRealPayAmount()+postAmount);
+        merchantOrdersBO.setMerchantOrderId(orderId);
+        merchantOrdersBO.setMerchantUserId(userId);
+        merchantOrdersBO.setPayMethod(payMethod);
+        merchantOrdersBO.setReturnUrl("");
+        OrderVO orderVO = new OrderVO();
+        orderVO.setOrderId(orderId);
+        orderVO.setMerchantOrdersBO(merchantOrdersBO);
+        return  orderVO;
     }
 
     /**

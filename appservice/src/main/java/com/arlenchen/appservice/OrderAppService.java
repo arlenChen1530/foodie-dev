@@ -1,6 +1,7 @@
 package com.arlenchen.appservice;
 
 import com.arlenchen.pojo.bo.SubmitOrderBo;
+import com.arlenchen.pojo.vo.OrderVO;
 
 public interface OrderAppService {
     /**
@@ -8,7 +9,7 @@ public interface OrderAppService {
      *
      * @param submitOrderBo 下单数据
      */
-    String createOrder(SubmitOrderBo submitOrderBo);
+    OrderVO createOrder(SubmitOrderBo submitOrderBo);
 
     /**
      * 修改订单状态
