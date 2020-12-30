@@ -4,6 +4,7 @@ com/arlenchen/pojo/bo/ShopCatBO.class
 com/arlenchen/pojo/OrderStatus.class
 com/arlenchen/pojo/vo/NewItemsVO.class
 com/arlenchen/pojo/ItemsComments.class
+com/arlenchen/pojo/vo/OrderVO.class
 com/arlenchen/pojo/bo/SubmitOrderBo.class
 com/arlenchen/pojo/vo/SubCategoryVO.class
 com/arlenchen/pojo/Users.class
@@ -12,10 +13,12 @@ com/arlenchen/pojo/PdmanDbVersion.class
 com/arlenchen/pojo/bo/UserBO.class
 com/arlenchen/pojo/Stu.class
 com/arlenchen/pojo/ItemsImg.class
+com/arlenchen/pojo/bo/MerchantOrdersBO.class
 com/arlenchen/pojo/ItemsSpec.class
 com/arlenchen/pojo/vo/SimpleItemVO.class
 com/arlenchen/pojo/UserAddress.class
 com/arlenchen/pojo/OrderItems.class
+com/arlenchen/pojo/vo/OrderStatusVO.class
 com/arlenchen/pojo/vo/ItemCommentVO.class
 com/arlenchen/pojo/vo/ItemInfoVO.class
 com/arlenchen/pojo/Items.class

@@ -12,17 +12,20 @@ import com.arlenchen.mapper.OrdersMapper;
 import com.arlenchen.pojo.*;
 import com.arlenchen.pojo.bo.MerchantOrdersBO;
 import com.arlenchen.pojo.bo.SubmitOrderBo;
+import com.arlenchen.pojo.vo.OrderStatusVO;
 import com.arlenchen.pojo.vo.OrderVO;
 import com.arlenchen.service.ItemsSpecService;
+import com.arlenchen.utils.DateUtil;
 import org.n3r.idworker.Sid;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
 @Service
 public class OrderAppServiceImpl implements OrderAppService {
     @Autowired
@@ -41,6 +44,7 @@ public class OrderAppServiceImpl implements OrderAppService {
     private ItemImgAppService itemImgAppService;
     @Autowired
     private ItemAppService itemAppService;
+
     /**
      * 用户下单
      *
@@ -78,15 +82,15 @@ public class OrderAppServiceImpl implements OrderAppService {
         List<ItemsSpec> specList = itemsSpecService.ListByIds(itemSpecIds);
         createOrderItemsList(specList, orders);
         //3.创建订单状态信息
-        OrderStatus waitPayOrderStatus =new OrderStatus();
+        OrderStatus waitPayOrderStatus = new OrderStatus();
         waitPayOrderStatus.setOrderId(orderId);
         waitPayOrderStatus.setCreatedTime(new Date());
         waitPayOrderStatus.setOrderStatus(OrderStatusEnum.WAIT_PAY.type);
         ordersMapper.insert(orders);
         orderStatusMapper.insert(waitPayOrderStatus);
         //4.创建商户订单，用于传给支付中心
-        MerchantOrdersBO merchantOrdersBO =new MerchantOrdersBO();
-        merchantOrdersBO.setAmount(orders.getRealPayAmount()+postAmount);
+        MerchantOrdersBO merchantOrdersBO = new MerchantOrdersBO();
+        merchantOrdersBO.setAmount(orders.getRealPayAmount() + postAmount);
         merchantOrdersBO.setMerchantOrderId(orderId);
         merchantOrdersBO.setMerchantUserId(userId);
         merchantOrdersBO.setPayMethod(payMethod);
@@ -94,7 +98,7 @@ public class OrderAppServiceImpl implements OrderAppService {
         OrderVO orderVO = new OrderVO();
         orderVO.setOrderId(orderId);
         orderVO.setMerchantOrdersBO(merchantOrdersBO);
-        return  orderVO;
+        return orderVO;
     }
 
     /**
@@ -106,11 +110,58 @@ public class OrderAppServiceImpl implements OrderAppService {
     @Transactional(propagation = Propagation.REQUIRED)
     @Override
     public void updateOrderStatus(String orderId, Integer orderStatus) {
-        OrderStatus paidStatus=new OrderStatus();
+        OrderStatus paidStatus = new OrderStatus();
         paidStatus.setOrderId(orderId);
         paidStatus.setOrderStatus(orderStatus);
         paidStatus.setPayTime(new Date());
         orderStatusMapper.updateByPrimaryKeySelective(paidStatus);
+    }
+
+    /**
+     * 查询订单是否支付成功
+     *
+     * @param orderId 订单Id
+     * @return OrderStatus
+     */
+    @Transactional(propagation = Propagation.SUPPORTS)
+    @Override
+    public OrderStatusVO getPaidOrderInfo(String orderId) {
+        OrderStatus orderStatus = orderStatusMapper.selectByPrimaryKey(orderId);
+        if (orderStatus != null) {
+            OrderStatusVO orderStatusVO = new OrderStatusVO();
+            BeanUtils.copyProperties(orderStatus, orderStatusVO);
+            orderStatusVO.setOrderId(orderId);
+            return orderStatusVO;
+        }
+        return null;
+    }
+
+    /**
+     * 关闭订单
+     */
+    @Transactional(propagation = Propagation.REQUIRED)
+    @Override
+    public void closeOrder() {
+        OrderStatus orderStatus = new OrderStatus();
+        orderStatus.setOrderStatus(OrderStatusEnum.WAIT_PAY.type);
+        List<OrderStatus> statusList = orderStatusMapper.select(orderStatus);
+        for (OrderStatus closeOrder : statusList) {
+            Date createdTime = closeOrder.getCreatedTime();
+            int dateDiff = DateUtil.daysBetween(createdTime, new Date());
+            if (dateDiff >= 1) {
+                doCloseOrder(closeOrder.getOrderId());
+            }
+        }
+
+    }
+
+    @Transactional(propagation = Propagation.REQUIRED)
+    void doCloseOrder(String orderId) {
+        OrderStatus orderStatus = new OrderStatus();
+        orderStatus.setOrderStatus(OrderStatusEnum.CLOSE.type);
+        orderStatus.setCloseTime(new Date());
+        orderStatus.setOrderId(orderId);
+        orderStatusMapper.updateByPrimaryKeySelective(orderStatus);
     }
 
     /**
@@ -119,7 +170,8 @@ public class OrderAppServiceImpl implements OrderAppService {
      * @param specList 商品规格信息
      * @param orders   订单
      */
-    private void createOrderItemsList(List<ItemsSpec> specList, Orders orders) {
+    @Transactional(propagation = Propagation.REQUIRED)
+    void createOrderItemsList(List<ItemsSpec> specList, Orders orders) {
         //2.1根据规格id，查询规格获取价格
         int totalAmount = 0;
         int realPayAmount = 0;
@@ -146,7 +198,7 @@ public class OrderAppServiceImpl implements OrderAppService {
             orderItems.setPrice(itemsSpec.getPriceDiscount());
             orderItemsMapper.insert(orderItems);
             //2.4在用户提交订单以后，规格表中需要扣除库存
-            itemsSpecService.decreaseItemSpecStock(itemsSpec.getId(),buyCount);
+            itemsSpecService.decreaseItemSpecStock(itemsSpec.getId(), buyCount);
         }
         orders.setTotalAmount(totalAmount);
         orders.setRealPayAmount(realPayAmount);

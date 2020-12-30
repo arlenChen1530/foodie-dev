@@ -1,6 +1,8 @@
 package com.arlenchen.appservice;
 
+import com.arlenchen.pojo.OrderStatus;
 import com.arlenchen.pojo.bo.SubmitOrderBo;
+import com.arlenchen.pojo.vo.OrderStatusVO;
 import com.arlenchen.pojo.vo.OrderVO;
 
 public interface OrderAppService {
@@ -18,4 +20,17 @@ public interface OrderAppService {
      * @param orderStatus 订单状态
      */
     void updateOrderStatus(String orderId, Integer orderStatus);
+
+    /**
+     * 查询订单是否支付成功
+     *
+     * @param orderId 订单Id
+     * @return OrderStatus
+     */
+    OrderStatusVO getPaidOrderInfo(String orderId);
+
+    /**
+     * 关闭订单
+     */
+    void closeOrder();
 }

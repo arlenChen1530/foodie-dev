@@ -4,6 +4,7 @@ import com.arlenchen.appservice.OrderAppService;
 import com.arlenchen.enums.OrderStatusEnum;
 import com.arlenchen.pojo.bo.MerchantOrdersBO;
 import com.arlenchen.pojo.bo.SubmitOrderBo;
+import com.arlenchen.pojo.vo.OrderStatusVO;
 import com.arlenchen.pojo.vo.OrderVO;
 import com.arlenchen.utils.CookieUtils;
 import com.arlenchen.utils.JsonResult;
@@ -64,6 +65,13 @@ public class OrderController extends BaseController {
     public Integer notifyMerchantOrderPaid(@ApiParam(name = "merchantOrderId", value = "订单id", required = true) @RequestParam String merchantOrderId) {
         orderAppService.updateOrderStatus(merchantOrderId, OrderStatusEnum.WAIT_DELIVER.type);
         return HttpStatus.OK.value();
+    }
+
+    @ApiOperation(value = "查询订单是否支付成功", notes = "查询订单是否支付成功", httpMethod = "POST")
+    @PostMapping("/getPaidOrderInfo")
+    public JsonResult getPaidOrderInfo(@ApiParam(name = "orderId", value = "订单id", required = true) @RequestParam String orderId) {
+        OrderStatusVO orderStatusVO= orderAppService.getPaidOrderInfo(orderId);
+        return JsonResult.ok(orderStatusVO);
     }
 
 }
