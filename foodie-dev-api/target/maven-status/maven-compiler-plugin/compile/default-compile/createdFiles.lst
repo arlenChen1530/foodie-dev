@@ -1,5 +1,7 @@
 com/arlenchen/controller/IndexController.class
 com/arlenchen/Application.class
+com/arlenchen/controller/center/CenterUsersController.class
+com/arlenchen/controller/center/CenterController.class
 com/arlenchen/controller/HellController.class
 com/arlenchen/controller/StuFooController.class
 com/arlenchen/controller/AddressController.class

@@ -20,6 +20,7 @@ com/arlenchen/pojo/UserAddress.class
 com/arlenchen/pojo/OrderItems.class
 com/arlenchen/pojo/vo/OrderStatusVO.class
 com/arlenchen/pojo/vo/ItemCommentVO.class
+com/arlenchen/pojo/bo/center/CenterUserBO.class
 com/arlenchen/pojo/vo/ItemInfoVO.class
 com/arlenchen/pojo/Items.class
 com/arlenchen/pojo/Orders.class
@@ -27,4 +28,5 @@ com/arlenchen/pojo/ItemsParam.class
 com/arlenchen/pojo/vo/CommentLevelCountsVO.class
 com/arlenchen/pojo/Category.class
 com/arlenchen/pojo/vo/ShopCatVO.class
+com/arlenchen/pojo/vo/UsersVO.class
 com/arlenchen/pojo/bo/AddressBO.class

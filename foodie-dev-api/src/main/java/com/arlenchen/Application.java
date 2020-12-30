@@ -11,7 +11,7 @@ import tk.mybatis.spring.annotation.MapperScan;
 @MapperScan(basePackages = "com.arlenchen.mapper")
 //扫码所有包以及相关组件包
 @ComponentScan(basePackages = {"org.n3r.idworker","com.arlenchen"})
-@EnableScheduling //开启定时任务
+//@EnableScheduling //开启定时任务
 public class Application {
     public static void main(String[] args) {
         SpringApplication.run(Application.class,args);

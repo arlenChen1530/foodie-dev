@@ -2,6 +2,7 @@
 /Users/arlenchen/Documents/project/foodie-dev/foodie-dev-pojo/src/main/java/com/arlenchen/pojo/Carousel.java
 /Users/arlenchen/Documents/project/foodie-dev/foodie-dev-pojo/src/main/java/com/arlenchen/pojo/vo/ItemCommentVO.java
 /Users/arlenchen/Documents/project/foodie-dev/foodie-dev-pojo/src/main/java/com/arlenchen/pojo/Items.java
+/Users/arlenchen/Documents/project/foodie-dev/foodie-dev-pojo/src/main/java/com/arlenchen/pojo/vo/UsersVO.java
 /Users/arlenchen/Documents/project/foodie-dev/foodie-dev-pojo/src/main/java/com/arlenchen/pojo/PdmanDbVersion.java
 /Users/arlenchen/Documents/project/foodie-dev/foodie-dev-pojo/src/main/java/com/arlenchen/pojo/vo/SubCategoryVO.java
 /Users/arlenchen/Documents/project/foodie-dev/foodie-dev-pojo/src/main/java/com/arlenchen/pojo/OrderStatus.java
@@ -21,6 +22,7 @@
 /Users/arlenchen/Documents/project/foodie-dev/foodie-dev-pojo/src/main/java/com/arlenchen/pojo/bo/SubmitOrderBo.java
 /Users/arlenchen/Documents/project/foodie-dev/foodie-dev-pojo/src/main/java/com/arlenchen/pojo/vo/CommentLevelCountsVO.java
 /Users/arlenchen/Documents/project/foodie-dev/foodie-dev-pojo/src/main/java/com/arlenchen/pojo/OrderItems.java
+/Users/arlenchen/Documents/project/foodie-dev/foodie-dev-pojo/src/main/java/com/arlenchen/pojo/bo/center/CenterUserBO.java
 /Users/arlenchen/Documents/project/foodie-dev/foodie-dev-pojo/src/main/java/com/arlenchen/pojo/bo/UserBO.java
 /Users/arlenchen/Documents/project/foodie-dev/foodie-dev-pojo/src/main/java/com/arlenchen/pojo/vo/SearchItemsVO.java
 /Users/arlenchen/Documents/project/foodie-dev/foodie-dev-pojo/src/main/java/com/arlenchen/pojo/vo/OrderStatusVO.java

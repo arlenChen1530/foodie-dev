@@ -5,34 +5,34 @@ import io.swagger.annotations.ApiModelProperty;
 
 @ApiModel(value = "用户对象bo",description = "从客户端，由用户传入的数据封装在此entity中")
 public class UserBO {
-    @ApiModelProperty(value = "用户名",name = "userName",required = true,example = "111")
-    String userName;
+    @ApiModelProperty(value = "用户名",name = "username",required = true,example = "111")
+    String username;
     @ApiModelProperty(value = "密码",name = "passWord",required = true,example = "123456")
-    String passWord;
+    String password;
     @ApiModelProperty(value = "确认密码",name = "confirmPassWord",required = true,example = "123456")
-    String confirmPassWord;
+    String confirmPassword;
 
-    public String getUserName() {
-        return userName;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
-    public String getPassWord() {
-        return passWord;
+    public String getPassword() {
+        return password;
     }
 
-    public void setPassWord(String passWord) {
-        this.passWord = passWord;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
-    public String getConfirmPassWord() {
-        return confirmPassWord;
+    public String getConfirmPassword() {
+        return confirmPassword;
     }
 
-    public void setConfirmPassWord(String confirmPassWord) {
-        this.confirmPassWord = confirmPassWord;
+    public void setConfirmPassword(String confirmPassword) {
+        this.confirmPassword = confirmPassword;
     }
 }

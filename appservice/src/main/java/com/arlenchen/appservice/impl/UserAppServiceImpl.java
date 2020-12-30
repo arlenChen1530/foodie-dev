@@ -45,13 +45,13 @@ public class UserAppServiceImpl implements UserAppService {
     @Override
     public Users createUses(UserBO userBO)  {
         Users users =new Users();
-        users.setUsername(userBO.getUserName());
+        users.setUsername(userBO.getUsername());
         try {
-            users.setPassword(MD5Utils.getMD5Str(userBO.getPassWord()));
+            users.setPassword(MD5Utils.getMD5Str(userBO.getPassword()));
         } catch (Exception e) {
             e.getMessage();
         }
-        users.setNickname(userBO.getUserName());
+        users.setNickname(userBO.getUsername());
         users.setFace(USER_FACE);
         users.setBirthday(DateUtil.stringToDate("1900-01-01"));
         users.setSex(Sex.secret.type);

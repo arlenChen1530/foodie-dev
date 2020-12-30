@@ -1,4 +1,6 @@
 com/arlenchen/service/impl/ItemsSpecServiceImpl.class
 com/arlenchen/service/ItemsSpecService.class
+com/arlenchen/service/center/CenterUserService.class
 com/arlenchen/service/ItemService.class
 com/arlenchen/service/impl/ItemServiceImpl.class
+com/arlenchen/service/impl/center/CenterUserServiceImpl.class

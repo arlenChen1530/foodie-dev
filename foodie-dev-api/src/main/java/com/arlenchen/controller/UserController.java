@@ -19,7 +19,7 @@ import javax.servlet.http.HttpServletResponse;
 @Api(value = "用户注册", tags = "用户注册相关接口")
 @RestController
 @RequestMapping("passport")
-public class UserController {
+public class UserController  extends  BaseController{
     private final UserAppService userService;
 
     @Autowired
@@ -28,8 +28,8 @@ public class UserController {
     }
 
     @ApiOperation(value = "用户是否存在", notes = "用户是否存在", httpMethod = "GET")
-    @GetMapping("/userNameIsExist")
-    public JsonResult userNameIsExist(String userName) {
+    @GetMapping("/usernameIsExist")
+    public JsonResult usernameIsExist(String userName) {
         // 1. 判断用户名不能为空
         if (StringUtils.isBlank(userName)) {
             return JsonResult.errorMsg("用户名不能为空");
@@ -44,13 +44,13 @@ public class UserController {
     }
 
     @ApiOperation(value = "用户注册", notes = "用户注册", httpMethod = "POST")
-    @PostMapping("/register")
+    @PostMapping("/regist")
     public JsonResult register(@RequestBody UserBO userBO,
                                HttpServletRequest request,
                                HttpServletResponse response) {
-        String userName = userBO.getUserName();
-        String passWord = userBO.getPassWord();
-        String confirmPassWord = userBO.getConfirmPassWord();
+        String userName = userBO.getUsername();
+        String passWord = userBO.getPassword();
+        String confirmPassWord = userBO.getConfirmPassword();
         //0.判断用户名和密码不能为空
         if (StringUtils.isBlank(userName) ||
                 StringUtils.isBlank(passWord) ||
@@ -85,9 +85,8 @@ public class UserController {
     public JsonResult login(@RequestBody UserBO userBO,
                             HttpServletRequest request,
                             HttpServletResponse response) throws Exception {
-        String userName = userBO.getUserName();
-        String passWord = userBO.getPassWord();
-        // 0. 判断用户名和密码必须不为空
+        String userName = userBO.getUsername();
+        String passWord = userBO.getPassword();        // 0. 判断用户名和密码必须不为空
         if (StringUtils.isBlank(userName) ||
                 StringUtils.isBlank(passWord)) {
             return JsonResult.errorMsg("用户名或密码不能为空");
@@ -118,13 +117,4 @@ public class UserController {
         return JsonResult.ok();
     }
 
-
-    private void setNullProperty(Users userResult) {
-        userResult.setPassword(null);
-        userResult.setMobile(null);
-        userResult.setEmail(null);
-        userResult.setCreatedTime(null);
-        userResult.setUpdatedTime(null);
-        userResult.setBirthday(null);
-    }
 }
