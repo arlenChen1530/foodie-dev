@@ -4,6 +4,7 @@ import java.util.List;
 
 /**
  * 最新商品VO
+ * @author arlenchen
  */
 public class NewItemsVO {
     private Integer rootCatId;
@@ -59,5 +60,17 @@ public class NewItemsVO {
 
     public void setSimpleItemVoList(List<SimpleItemVO> simpleItemVoList) {
         this.simpleItemVoList = simpleItemVoList;
+    }
+
+    @Override
+    public String toString() {
+        return "NewItemsVO{" +
+                "rootCatId=" + rootCatId +
+                ", rootCatName='" + rootCatName + '\'' +
+                ", slogan='" + slogan + '\'' +
+                ", catImage='" + catImage + '\'' +
+                ", bgColor='" + bgColor + '\'' +
+                ", simpleItemVoList=" + simpleItemVoList +
+                '}';
     }
 }

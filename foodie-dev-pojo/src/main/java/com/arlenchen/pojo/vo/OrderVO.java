@@ -2,6 +2,9 @@ package com.arlenchen.pojo.vo;
 
 import com.arlenchen.pojo.bo.MerchantOrdersBO;
 
+/**
+ * @author arlenchen
+ */
 public class OrderVO {
 
     private String orderId;
@@ -21,5 +24,13 @@ public class OrderVO {
 
     public void setMerchantOrdersBO(MerchantOrdersBO merchantOrdersBO) {
         this.merchantOrdersBO = merchantOrdersBO;
+    }
+
+    @Override
+    public String toString() {
+        return "OrderVO{" +
+                "orderId='" + orderId + '\'' +
+                ", merchantOrdersBO=" + merchantOrdersBO +
+                '}';
     }
 }

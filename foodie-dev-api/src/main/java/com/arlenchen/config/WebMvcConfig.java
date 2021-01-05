@@ -7,11 +7,14 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+/**
+ * @author arlenchen
+ */
 @Configuration
 public class WebMvcConfig  implements WebMvcConfigurer {
     /**
      * 实现静态资源的映射
-     * @param registry
+     * @param registry registry
      */
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {

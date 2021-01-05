@@ -17,6 +17,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ * @author arlenchen
+ */
 @Api(value = "商品接口", tags = "商品信息展示的相关接口")
 @RestController
 @RequestMapping("items")

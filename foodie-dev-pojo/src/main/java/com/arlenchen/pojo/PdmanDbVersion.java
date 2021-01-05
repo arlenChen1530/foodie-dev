@@ -2,6 +2,9 @@ package com.arlenchen.pojo;
 
 import javax.persistence.*;
 
+/**
+ * @author arlenchen
+ */
 @Table(name = "PDMAN_DB_VERSION")
 public class PdmanDbVersion {
     @Column(name = "DB_VERSION")

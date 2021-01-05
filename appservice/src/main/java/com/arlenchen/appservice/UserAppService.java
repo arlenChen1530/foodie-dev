@@ -3,8 +3,17 @@ package com.arlenchen.appservice;
 
 import com.arlenchen.pojo.Users;
 import com.arlenchen.pojo.bo.UserBO;
+import com.arlenchen.utils.JsonResult;
 
+/**
+ * @author arlenchen
+ */
 public interface UserAppService {
+    /**
+     *  查询用户名是否存在
+     * @param userName 用户名
+     * @return  boolean
+     */
     boolean queryUserNameIsExist(String userName);
 
     /**
@@ -13,7 +22,7 @@ public interface UserAppService {
      * @param userBO 用户
      * @return 用户
      */
-    Users createUses(UserBO userBO);
+    JsonResult createUses(UserBO userBO);
 
     /**
      * 登录用户
@@ -21,5 +30,5 @@ public interface UserAppService {
      * @param passWord 密码
      * @return 用户
      */
-    Users login(String userName, String passWord);
+    JsonResult login(String userName, String passWord);
 }

@@ -2,6 +2,9 @@ package com.arlenchen.pojo;
 
 import javax.persistence.*;
 
+/**
+ * @author arlenchen
+ */
 public class Category {
     /**
      * 主键

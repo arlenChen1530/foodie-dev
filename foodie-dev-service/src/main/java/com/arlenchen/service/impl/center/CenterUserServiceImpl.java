@@ -12,6 +12,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 
+/**
+ * @author arlenchen
+ */
 @Service
 public class CenterUserServiceImpl implements CenterUserService {
     private final UsersMapper usersMapper;
@@ -27,7 +30,7 @@ public class CenterUserServiceImpl implements CenterUserService {
      * @param userId 用户ID
      * @return 用户
      */
-    @Transactional(propagation = Propagation.SUPPORTS)
+    @Transactional(propagation = Propagation.SUPPORTS,rollbackFor = Exception.class)
     @Override
     public Users queryUsersInfo(String userId) {
         return usersMapper.selectByPrimaryKey(userId);
@@ -39,7 +42,7 @@ public class CenterUserServiceImpl implements CenterUserService {
      * @param userId       用户ID
      * @param centerUserBO 用户信息
      */
-    @Transactional(propagation = Propagation.REQUIRED)
+    @Transactional(propagation = Propagation.REQUIRED,rollbackFor = Exception.class)
     @Override
     public void update(String userId, CenterUserBO centerUserBO) {
         Users users =new Users();

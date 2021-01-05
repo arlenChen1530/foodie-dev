@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * @author arlenchen
+ */
 @Api(value = "用户中心", tags = {"用户中心相关接口"})
 @RestController
 @RequestMapping("center")

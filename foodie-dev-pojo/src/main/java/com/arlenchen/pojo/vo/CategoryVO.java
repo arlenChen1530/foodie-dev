@@ -4,13 +4,16 @@ import java.util.List;
 
 /**
  * 二级分类
+ * @author arlenchen
  */
 public class CategoryVO {
     private Integer id;
     private String name;
     private Integer type;
     private Integer fatherId;
-    //三级分类vo
+    /**
+     * 三级分类vo
+     */
     List<SubCategoryVO> subCatList;
 
     public Integer getId() {
@@ -51,5 +54,16 @@ public class CategoryVO {
 
     public void setSubCatList(List<SubCategoryVO> subCatList) {
         this.subCatList = subCatList;
+    }
+
+    @Override
+    public String toString() {
+        return "CategoryVO{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", type=" + type +
+                ", fatherId=" + fatherId +
+                ", subCatList=" + subCatList +
+                '}';
     }
 }

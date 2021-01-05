@@ -6,6 +6,9 @@ import com.arlenchen.pojo.vo.NewItemsVO;
 
 import java.util.List;
 
+/**
+ * @author arlenchen
+ */
 public interface CategoryAppService {
     /**
      * 查询所有一级分类
@@ -20,7 +23,7 @@ public interface CategoryAppService {
      * @param rootCatId  一级分类id
      * @return List
      */
-    List<CategoryVO> getSubCatLIst(Integer rootCatId);
+    List<CategoryVO> getSubCatList(Integer rootCatId);
 
     /**
      * 根据一级分类id查询出六条最新的产品信息

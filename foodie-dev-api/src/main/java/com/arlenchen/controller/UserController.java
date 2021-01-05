@@ -3,6 +3,7 @@ package com.arlenchen.controller;
 import com.arlenchen.appservice.UserAppService;
 import com.arlenchen.pojo.Users;
 import com.arlenchen.pojo.bo.UserBO;
+import com.arlenchen.pojo.vo.UsersVO;
 import com.arlenchen.utils.CookieUtils;
 import com.arlenchen.utils.JsonResult;
 import com.arlenchen.utils.JsonUtils;
@@ -16,6 +17,9 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+/**
+ * @author arlenchen
+ */
 @Api(value = "用户注册", tags = "用户注册相关接口")
 @RestController
 @RequestMapping("passport")
@@ -71,10 +75,14 @@ public class UserController  extends  BaseController{
             return JsonResult.errorMsg("两次密码不一致");
         }
         //4. 实现注册
-        Users users = userService.createUses(userBO);
-        setNullProperty(users);
+        JsonResult jsonResult = userService.createUses(userBO);
+        if(!jsonResult.isOK()){
+             return  jsonResult;
+        }
+        UsersVO usersVO =(UsersVO)jsonResult.getData();
+        setNullVoProperty(usersVO);
         CookieUtils.setCookie(request, response, "user",
-                JsonUtils.objectToJson(users), true);
+                JsonUtils.objectToJson(usersVO), true);
         // TODO 生成用户token，存入redis会话
         // TODO 同步购物车数据
         return JsonResult.ok();
@@ -86,22 +94,24 @@ public class UserController  extends  BaseController{
                             HttpServletRequest request,
                             HttpServletResponse response) throws Exception {
         String userName = userBO.getUsername();
-        String passWord = userBO.getPassword();        // 0. 判断用户名和密码必须不为空
+        // 0. 判断用户名和密码必须不为空
+        String passWord = userBO.getPassword();
         if (StringUtils.isBlank(userName) ||
                 StringUtils.isBlank(passWord)) {
             return JsonResult.errorMsg("用户名或密码不能为空");
         }
         // 1. 实现登录
-        Users users = userService.login(userName, MD5Utils.getMD5Str(passWord));
-        if (users == null) {
+        JsonResult jsonResult= userService.login(userName, MD5Utils.getMD5Str(passWord));
+        if (!jsonResult.isOK()||jsonResult.getData() == null) {
             return JsonResult.errorMsg("用户名或密码不正确");
         }
-       setNullProperty(users);
+        UsersVO usersVO =(UsersVO)jsonResult.getData();
+        setNullVoProperty(usersVO);
         CookieUtils.setCookie(request, response, "user",
-                JsonUtils.objectToJson(users), true);
+                JsonUtils.objectToJson(usersVO), true);
         // TODO 生成用户token，存入redis会话
         // TODO 同步购物车数据
-        return JsonResult.ok(users);
+        return JsonResult.ok(usersVO);
     }
 
     @ApiOperation(value = "用户退出登录", notes = "用户退出登录", httpMethod = "POST")

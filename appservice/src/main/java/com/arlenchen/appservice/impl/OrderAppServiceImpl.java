@@ -11,7 +11,7 @@ import com.arlenchen.mapper.OrderStatusMapper;
 import com.arlenchen.mapper.OrdersMapper;
 import com.arlenchen.pojo.*;
 import com.arlenchen.pojo.bo.MerchantOrdersBO;
-import com.arlenchen.pojo.bo.SubmitOrderBo;
+import com.arlenchen.pojo.bo.SubmitOrderBO;
 import com.arlenchen.pojo.vo.OrderStatusVO;
 import com.arlenchen.pojo.vo.OrderVO;
 import com.arlenchen.service.ItemsSpecService;
@@ -26,33 +26,40 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * @author arlenchen
+ */
 @Service
 public class OrderAppServiceImpl implements OrderAppService {
+    private final Sid sid;
+    private final OrdersMapper ordersMapper;
+    private final OrderItemsMapper orderItemsMapper;
+    private final OrderStatusMapper orderStatusMapper;
+    private final AddressAppService addressAppService;
+    private final ItemsSpecService itemsSpecService;
+    private final ItemImgAppService itemImgAppService;
+    private final ItemAppService itemAppService;
+
     @Autowired
-    private Sid sid;
-    @Autowired
-    private OrdersMapper ordersMapper;
-    @Autowired
-    private OrderItemsMapper orderItemsMapper;
-    @Autowired
-    private OrderStatusMapper orderStatusMapper;
-    @Autowired
-    private AddressAppService addressAppService;
-    @Autowired
-    private ItemsSpecService itemsSpecService;
-    @Autowired
-    private ItemImgAppService itemImgAppService;
-    @Autowired
-    private ItemAppService itemAppService;
+    public OrderAppServiceImpl(Sid sid, OrdersMapper ordersMapper, OrderItemsMapper orderItemsMapper, OrderStatusMapper orderStatusMapper, AddressAppService addressAppService, ItemsSpecService itemsSpecService, ItemImgAppService itemImgAppService, ItemAppService itemAppService) {
+        this.sid = sid;
+        this.ordersMapper = ordersMapper;
+        this.orderItemsMapper = orderItemsMapper;
+        this.orderStatusMapper = orderStatusMapper;
+        this.addressAppService = addressAppService;
+        this.itemsSpecService = itemsSpecService;
+        this.itemImgAppService = itemImgAppService;
+        this.itemAppService = itemAppService;
+    }
 
     /**
      * 用户下单
      *
      * @param submitOrderBo 下单数据
      */
-    @Transactional(propagation = Propagation.REQUIRED)
+    @Transactional(propagation = Propagation.REQUIRED,rollbackFor = Exception.class)
     @Override
-    public OrderVO createOrder(SubmitOrderBo submitOrderBo) {
+    public OrderVO createOrder(SubmitOrderBO submitOrderBo) {
         String userId = submitOrderBo.getUserId();
         String itemSpecIds = submitOrderBo.getItemSpecIds();
         String addressId = submitOrderBo.getAddressId();
@@ -107,7 +114,7 @@ public class OrderAppServiceImpl implements OrderAppService {
      * @param orderId     订单Id
      * @param orderStatus 订单状态
      */
-    @Transactional(propagation = Propagation.REQUIRED)
+    @Transactional(propagation = Propagation.REQUIRED,rollbackFor = Exception.class)
     @Override
     public void updateOrderStatus(String orderId, Integer orderStatus) {
         OrderStatus paidStatus = new OrderStatus();

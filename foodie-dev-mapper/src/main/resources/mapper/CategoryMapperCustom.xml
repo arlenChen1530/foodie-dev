@@ -18,7 +18,7 @@
             <result column="subFatherId" jdbcType="INTEGER" property="subFatherId"/>
         </collection>
     </resultMap>
-    <select id="getSubCatLIst" parameterType="int" resultMap="myCategoryVO">
+    <select id="getSubCatList" parameterType="int" resultMap="myCategoryVO">
     SELECT
         father.id AS id,
         father.`name` AS name,

@@ -2,6 +2,9 @@ package com.arlenchen.pojo.vo;
 
 import java.util.Date;
 
+/**
+ * @author arlenchen
+ */
 public class UsersVO {
     /**
      * 主键id 用户id
@@ -277,5 +280,23 @@ public class UsersVO {
      */
     public void setUpdatedTime(Date updatedTime) {
         this.updatedTime = updatedTime;
+    }
+
+    @Override
+    public String toString() {
+        return "UsersVO{" +
+                "id='" + id + '\'' +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", nickname='" + nickname + '\'' +
+                ", realname='" + realname + '\'' +
+                ", face='" + face + '\'' +
+                ", mobile='" + mobile + '\'' +
+                ", email='" + email + '\'' +
+                ", sex=" + sex +
+                ", birthday=" + birthday +
+                ", createdTime=" + createdTime +
+                ", updatedTime=" + updatedTime +
+                '}';
     }
 }

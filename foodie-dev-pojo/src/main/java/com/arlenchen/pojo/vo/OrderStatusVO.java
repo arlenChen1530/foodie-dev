@@ -4,6 +4,9 @@ package com.arlenchen.pojo.vo;
 import java.io.Serializable;
 import java.util.Date;
 
+/**
+ * @author arlenchen
+ */
 public class OrderStatusVO  implements Serializable {
     /**
      * 订单ID;对应订单表的主键id
@@ -187,5 +190,19 @@ public class OrderStatusVO  implements Serializable {
      */
     public void setCommentTime(Date commentTime) {
         this.commentTime = commentTime;
+    }
+
+    @Override
+    public String toString() {
+        return "OrderStatusVO{" +
+                "orderId='" + orderId + '\'' +
+                ", orderStatus=" + orderStatus +
+                ", createdTime=" + createdTime +
+                ", payTime=" + payTime +
+                ", deliverTime=" + deliverTime +
+                ", successTime=" + successTime +
+                ", closeTime=" + closeTime +
+                ", commentTime=" + commentTime +
+                '}';
     }
 }

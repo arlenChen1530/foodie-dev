@@ -1,5 +1,8 @@
 package com.arlenchen.appservice;
 
+/**
+ * @author arlenchen
+ */
 public interface ItemImgAppService {
     /**
      * 根据商品id查询商品主图

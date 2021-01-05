@@ -2,6 +2,9 @@ package com.arlenchen.pojo;
 
 import javax.persistence.*;
 
+/**
+ * @author arlenchen
+ */
 @Table(name = "order_items")
 public class OrderItems {
     /**

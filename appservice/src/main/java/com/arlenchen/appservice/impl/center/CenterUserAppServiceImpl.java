@@ -11,6 +11,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+/**
+ * @author arlenchen
+ */
 @Service
 public class CenterUserAppServiceImpl implements CenterUserAppService {
     private final CenterUserService centerUserService;
@@ -26,7 +29,7 @@ public class CenterUserAppServiceImpl implements CenterUserAppService {
      * @param userId 用户ID
      * @return 用户
      */
-    @Transactional(propagation = Propagation.SUPPORTS)
+    @Transactional(propagation = Propagation.SUPPORTS,rollbackFor = Exception.class)
     @Override
     public UsersVO queryUsersInfo(String userId) {
         Users users = centerUserService.queryUsersInfo(userId);
@@ -46,7 +49,7 @@ public class CenterUserAppServiceImpl implements CenterUserAppService {
      * @param userId       用户ID
      * @param centerUserBO 用户信息
      */
-    @Transactional(propagation = Propagation.REQUIRED)
+    @Transactional(propagation = Propagation.REQUIRED,rollbackFor = Exception.class)
     @Override
     public UsersVO update(String userId, CenterUserBO centerUserBO) {
         centerUserService.update(userId, centerUserBO);
@@ -59,6 +62,7 @@ public class CenterUserAppServiceImpl implements CenterUserAppService {
      * @param userId  用户ID
      * @param faceUrl 头像
      */
+    @Transactional(propagation = Propagation.REQUIRED,rollbackFor = Exception.class)
     @Override
     public UsersVO uploadFace(String userId, String faceUrl) {
         CenterUserBO centerUserBO =new CenterUserBO();

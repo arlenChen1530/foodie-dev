@@ -9,6 +9,7 @@ import java.util.List;
 
 /**
  * 商品详情VO
+ * @author arlenchen
  */
 public class ItemInfoVO {
     Items items;
@@ -46,5 +47,15 @@ public class ItemInfoVO {
 
     public void setItemParams(ItemsParam itemParams) {
         this.itemParams = itemParams;
+    }
+
+    @Override
+    public String toString() {
+        return "ItemInfoVO{" +
+                "items=" + items +
+                ", itemImgList=" + itemImgList +
+                ", itemSpecList=" + itemSpecList +
+                ", itemParams=" + itemParams +
+                '}';
     }
 }

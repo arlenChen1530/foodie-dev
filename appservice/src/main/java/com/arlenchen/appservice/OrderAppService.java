@@ -1,17 +1,19 @@
 package com.arlenchen.appservice;
 
-import com.arlenchen.pojo.OrderStatus;
-import com.arlenchen.pojo.bo.SubmitOrderBo;
+import com.arlenchen.pojo.bo.SubmitOrderBO;
 import com.arlenchen.pojo.vo.OrderStatusVO;
 import com.arlenchen.pojo.vo.OrderVO;
 
+/**
+ * @author arlenchen
+ */
 public interface OrderAppService {
     /**
      * 用户下单
      *
      * @param submitOrderBo 下单数据
      */
-    OrderVO createOrder(SubmitOrderBo submitOrderBo);
+    OrderVO createOrder(SubmitOrderBO submitOrderBo);
 
     /**
      * 修改订单状态

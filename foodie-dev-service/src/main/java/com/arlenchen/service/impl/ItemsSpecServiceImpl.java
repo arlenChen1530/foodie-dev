@@ -13,6 +13,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * @author arlenchen
+ */
 @Service
 public class ItemsSpecServiceImpl implements ItemsSpecService {
     private final ItemsSpecMapper itemsSpecMapper;
@@ -30,7 +33,7 @@ public class ItemsSpecServiceImpl implements ItemsSpecService {
      * @param id id
      * @return ItemsSpec
      */
-    @Transactional(propagation = Propagation.SUPPORTS)
+    @Transactional(propagation = Propagation.SUPPORTS,rollbackFor = Exception.class)
     @Override
     public ItemsSpec queryById(String id) {
         return itemsSpecMapper.selectByPrimaryKey(id);
@@ -42,13 +45,13 @@ public class ItemsSpecServiceImpl implements ItemsSpecService {
      * @param ids id
      * @return List
      */
-    @Transactional(propagation = Propagation.SUPPORTS)
+    @Transactional(propagation = Propagation.SUPPORTS,rollbackFor = Exception.class)
     @Override
-    public List<ItemsSpec> ListByIds(String ids) {
+    public List<ItemsSpec> listByIds(String ids) {
         String[] idArr = ids.split(",");
         List<String> idList = new ArrayList<>();
         Collections.addAll(idList, idArr);
-        return itemsSpecMapper.ListByIds(idList);
+        return itemsSpecMapper.listByIds(idList);
     }
 
     /**
@@ -57,7 +60,7 @@ public class ItemsSpecServiceImpl implements ItemsSpecService {
      * @param specId    规格id
      * @param buyCounts 购买数量
      */
-    @Transactional(propagation = Propagation.REQUIRED)
+    @Transactional(propagation = Propagation.REQUIRED,rollbackFor = Exception.class)
     @Override
     public void decreaseItemSpecStock(String specId, int buyCounts) {
         //synchronized 不推荐使用，集群无效，效能低下

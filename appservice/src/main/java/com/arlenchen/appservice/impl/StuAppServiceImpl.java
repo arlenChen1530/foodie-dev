@@ -8,21 +8,37 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+/**
+ * @author arlenchen
+ */
 @Service
 public class StuAppServiceImpl implements StuAppService {
+    private final StuMapper stuMapper;
+
     @Autowired
-    private StuMapper stuMapper;
-    //支持查询就ok
-    @Transactional(propagation = Propagation.SUPPORTS)
+    public StuAppServiceImpl(StuMapper stuMapper) {
+        this.stuMapper = stuMapper;
+    }
+
+    /**
+     * 支持查询就ok
+     *
+     * @param id id
+     * @return Stu
+     */
+    @Transactional(propagation = Propagation.SUPPORTS, rollbackFor = Exception.class)
     @Override
     public Stu getStuInfo(int id) {
         return stuMapper.selectByPrimaryKey(id);
     }
 
-    @Transactional(propagation = Propagation.REQUIRED)
+    /**
+     * 保存
+     */
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     @Override
     public void saveStu() {
-        Stu stu=new Stu();
+        Stu stu = new Stu();
         stu.setAge(19);
         stu.setName("arlen");
         stuMapper.insert(stu);
@@ -48,18 +64,26 @@ public class StuAppServiceImpl implements StuAppService {
      *              但是如果主事务提交，则会携带子事务一起提交。
      *              如果主事务回滚，则子事务会一起回滚。相反，子事务异常，则父事务可以回滚或不回滚。
      *              举例：领导决策不对，老板怪罪，领导带着小弟一同受罪。小弟出了差错，领导可以推卸责任。
+     * 修改
+     *
+     * @param id id
      */
-    @Transactional(propagation = Propagation.REQUIRED)
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     @Override
     public void updateStu(int id) {
-        Stu stu=new Stu();
+        Stu stu = new Stu();
         stu.setId(id);
         stu.setAge(20);
         stu.setName("arlen1");
         stuMapper.updateByPrimaryKey(stu);
     }
 
-    @Transactional(propagation = Propagation.REQUIRED)
+    /**
+     * 删除
+     *
+     * @param id id
+     */
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     @Override
     public void deleteStu(int id) {
         stuMapper.deleteByPrimaryKey(id);

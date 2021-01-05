@@ -3,6 +3,9 @@ package com.arlenchen.pojo;
 import javax.persistence.*;
 import java.util.Date;
 
+/**
+ * @author arlenchen
+ */
 public class Orders {
     /**
      * 订单主键;同时也是订单编号

@@ -3,6 +3,9 @@ package com.arlenchen.service.center;
 import com.arlenchen.pojo.Users;
 import com.arlenchen.pojo.bo.center.CenterUserBO;
 
+/**
+ * @author arlenchen
+ */
 public interface CenterUserService {
     /**
      * 根据用户ID查询用户

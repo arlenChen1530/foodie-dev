@@ -5,9 +5,12 @@ import com.arlenchen.enums.Sex;
 import com.arlenchen.mapper.UsersMapper;
 import com.arlenchen.pojo.Users;
 import com.arlenchen.pojo.bo.UserBO;
+import com.arlenchen.pojo.vo.UsersVO;
 import com.arlenchen.utils.DateUtil;
+import com.arlenchen.utils.JsonResult;
 import com.arlenchen.utils.MD5Utils;
 import org.n3r.idworker.Sid;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -25,8 +28,12 @@ public class UserAppServiceImpl implements UserAppService {
     private Sid sid;
 
     private static final String USER_FACE = "http://122.152.205.72:88/group1/M00/00/05/CpoxxFw_8_qAIlFXAAAcIhVPdSg994.png";
-
-    @Transactional(propagation = Propagation.SUPPORTS)
+    /**
+     *  查询用户名是否存在
+     * @param userName 用户名
+     * @return  boolean
+     */
+    @Transactional(propagation = Propagation.SUPPORTS,rollbackFor = Exception.class)
     @Override
     public boolean queryUserNameIsExist(String userName) {
         Example example =new Example(Users.class);
@@ -41,15 +48,15 @@ public class UserAppServiceImpl implements UserAppService {
      * @param userBO 用户
      * @return 用户
      */
-    @Transactional(propagation = Propagation.REQUIRED)
+    @Transactional(propagation = Propagation.REQUIRED,rollbackFor = Exception.class)
     @Override
-    public Users createUses(UserBO userBO)  {
+    public JsonResult createUses(UserBO userBO)  {
         Users users =new Users();
         users.setUsername(userBO.getUsername());
         try {
             users.setPassword(MD5Utils.getMD5Str(userBO.getPassword()));
         } catch (Exception e) {
-            e.getMessage();
+            return  JsonResult.errorMsg(e.getMessage());
         }
         users.setNickname(userBO.getUsername());
         users.setFace(USER_FACE);
@@ -59,7 +66,11 @@ public class UserAppServiceImpl implements UserAppService {
         users.setUpdatedTime(new Date());
         users.setId(sid.nextShort());
         usersMapper.insert(users);
-        return users;
+        UsersVO usersVO = new UsersVO();
+        BeanUtils.copyProperties(users,usersVO);
+        usersVO.setId(users.getId());
+        usersVO.setPassword( null);
+        return JsonResult.ok(usersVO);
     }
 
     /**
@@ -68,13 +79,22 @@ public class UserAppServiceImpl implements UserAppService {
      * @param passWord 密码
      * @return 用户
      */
+    @Transactional(propagation = Propagation.SUPPORTS,rollbackFor = Exception.class)
     @Override
-    public Users login(String userName, String passWord) {
+    public JsonResult login(String userName, String passWord) {
         Example example =new Example(Users.class);
         Example.Criteria userCriteria=example.createCriteria();
         userCriteria.andEqualTo("username",userName);
         userCriteria.andEqualTo("password",passWord);
-        return usersMapper.selectOneByExample(example);
+        Users users=usersMapper.selectOneByExample(example);
+        if(users==null){
+            return  JsonResult.ok();
+        }
+        UsersVO usersVO = new UsersVO();
+        BeanUtils.copyProperties(users,usersVO);
+        usersVO.setId(users.getId());
+        usersVO.setPassword( null);
+        return  JsonResult.ok(usersVO);
     }
 
 }

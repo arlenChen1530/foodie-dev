@@ -2,6 +2,7 @@ package com.arlenchen.pojo.vo;
 
 /**
  * 二级分类
+ * @author arlenchen
  */
 public class SubCategoryVO {
     private Integer subId;
@@ -39,5 +40,15 @@ public class SubCategoryVO {
 
     public void setSubFatherId(Integer subFatherId) {
         this.subFatherId = subFatherId;
+    }
+
+    @Override
+    public String toString() {
+        return "SubCategoryVO{" +
+                "subId=" + subId +
+                ", subName='" + subName + '\'' +
+                ", subType=" + subType +
+                ", subFatherId=" + subFatherId +
+                '}';
     }
 }

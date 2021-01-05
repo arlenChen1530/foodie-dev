@@ -3,6 +3,9 @@ package com.arlenchen.pojo;
 import javax.persistence.*;
 import java.util.Date;
 
+/**
+ * @author arlenchen
+ */
 public class Users {
     /**
      * 主键id 用户id

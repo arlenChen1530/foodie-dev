@@ -4,6 +4,7 @@ import java.util.Date;
 
 /**
  * 展示商品评价vo
+ * @author arlenchen
  */
 public class ItemCommentVO {
     private Integer commentLevel;
@@ -59,5 +60,17 @@ public class ItemCommentVO {
 
     public void setNickName(String nickName) {
         this.nickName = nickName;
+    }
+
+    @Override
+    public String toString() {
+        return "ItemCommentVO{" +
+                "commentLevel=" + commentLevel +
+                ", content='" + content + '\'' +
+                ", specName='" + specName + '\'' +
+                ", createdTime=" + createdTime +
+                ", userFace='" + userFace + '\'' +
+                ", nickName='" + nickName + '\'' +
+                '}';
     }
 }

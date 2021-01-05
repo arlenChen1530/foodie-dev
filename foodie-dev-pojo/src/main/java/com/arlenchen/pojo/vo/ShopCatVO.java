@@ -2,6 +2,7 @@ package com.arlenchen.pojo.vo;
 
 /**
  * 购物车业务对象BO，
+ * @author arlenchen
  */
 public class ShopCatVO {
     private  String itemId;
@@ -69,4 +70,16 @@ public class ShopCatVO {
         this.priceNormal = priceNormal;
     }
 
+    @Override
+    public String toString() {
+        return "ShopCatVO{" +
+                "itemId='" + itemId + '\'' +
+                ", itemImgUrl='" + itemImgUrl + '\'' +
+                ", itemName='" + itemName + '\'' +
+                ", specId='" + specId + '\'' +
+                ", specName='" + specName + '\'' +
+                ", priceDiscount='" + priceDiscount + '\'' +
+                ", priceNormal='" + priceNormal + '\'' +
+                '}';
+    }
 }

@@ -6,6 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+/**
+ * @author arlenchen
+ */
 @Component
 public class OrderJob {
     private final OrderAppService orderAppService;

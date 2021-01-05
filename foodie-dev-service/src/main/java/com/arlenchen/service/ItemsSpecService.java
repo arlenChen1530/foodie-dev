@@ -7,6 +7,7 @@ import java.util.List;
 
 /**
  * 商品规格
+ * @author arlenchen
  */
 public interface ItemsSpecService {
     /**
@@ -23,7 +24,7 @@ public interface ItemsSpecService {
      * @param ids id
      * @return List
      */
-    List<ItemsSpec> ListByIds(String ids);
+    List<ItemsSpec> listByIds(String ids);
 
     /**
      * 减少库存

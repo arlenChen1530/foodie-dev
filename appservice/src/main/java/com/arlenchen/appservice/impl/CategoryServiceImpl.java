@@ -16,19 +16,26 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * @author arlenchen
+ */
 @Service
 public class CategoryServiceImpl implements CategoryAppService {
 
-    @Autowired
-    private CategoryMapper categoryMapper;
-    @Autowired
-    private CategoryMapperCustom categoryMapperCustom;
+    private final CategoryMapper categoryMapper;
+    private final CategoryMapperCustom categoryMapperCustom;
+@Autowired
+    public CategoryServiceImpl(CategoryMapper categoryMapper, CategoryMapperCustom categoryMapperCustom) {
+        this.categoryMapper = categoryMapper;
+        this.categoryMapperCustom = categoryMapperCustom;
+    }
+
     /**
      * 查询所有一级分类
      *
      * @return List
      */
-    @Transactional(propagation = Propagation.SUPPORTS)
+    @Transactional(propagation = Propagation.SUPPORTS,rollbackFor = Exception.class)
     @Override
     public List<Category> queryAllRootLevelCat() {
         Example example=new Example(Category.class);
@@ -43,10 +50,10 @@ public class CategoryServiceImpl implements CategoryAppService {
      * @param rootCatId  一级分类id
      * @return List
      */
-    @Transactional(propagation = Propagation.SUPPORTS)
+    @Transactional(propagation = Propagation.SUPPORTS,rollbackFor = Exception.class)
     @Override
-    public List<CategoryVO> getSubCatLIst(Integer rootCatId) {
-        return categoryMapperCustom.getSubCatLIst(rootCatId);
+    public List<CategoryVO> getSubCatList(Integer rootCatId) {
+        return categoryMapperCustom.getSubCatList(rootCatId);
     }
 
     /**
@@ -55,10 +62,10 @@ public class CategoryServiceImpl implements CategoryAppService {
      * @param rootCatId 一级分类id
      * @return list
      */
-    @Transactional(propagation = Propagation.SUPPORTS)
+    @Transactional(propagation = Propagation.SUPPORTS,rollbackFor = Exception.class)
     @Override
     public List<NewItemsVO> getSixNewItemsLazy(Integer rootCatId) {
-        Map<String,Object> map =new HashMap<>();
+        Map<String,Object> map =new HashMap<>(16);
         map.put("rootCatId",rootCatId);
         return categoryMapperCustom.getSixNewItemsLazy(map);
     }

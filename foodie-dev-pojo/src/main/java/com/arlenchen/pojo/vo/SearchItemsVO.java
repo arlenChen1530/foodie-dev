@@ -2,6 +2,7 @@ package com.arlenchen.pojo.vo;
 
 /**
  * 商品搜索VO
+ * @author arlenchen
  */
 public class SearchItemsVO {
  private  String itemId;
@@ -48,5 +49,16 @@ public class SearchItemsVO {
 
     public void setPrice(Integer price) {
         this.price = price;
+    }
+
+    @Override
+    public String toString() {
+        return "SearchItemsVO{" +
+                "itemId='" + itemId + '\'' +
+                ", itemName='" + itemName + '\'' +
+                ", sellCounts=" + sellCounts +
+                ", imgUrl='" + imgUrl + '\'' +
+                ", price=" + price +
+                '}';
     }
 }

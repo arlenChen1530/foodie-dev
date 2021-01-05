@@ -2,6 +2,7 @@ package com.arlenchen.controller.center;
 
 import com.arlenchen.appservice.center.CenterUserAppService;
 import com.arlenchen.controller.BaseController;
+import com.arlenchen.enums.ImageEnum;
 import com.arlenchen.pojo.bo.center.CenterUserBO;
 import com.arlenchen.pojo.vo.UsersVO;
 import com.arlenchen.resource.FileUpload;
@@ -20,6 +21,9 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.validation.Valid;
 import java.io.*;
 
+/**
+ * @author arlenchen
+ */
 @Api(value = "用户信息接口", tags = {"用户信息接口"})
 @RestController
 @RequestMapping("userInfo")
@@ -52,7 +56,7 @@ public class CenterUsersController extends BaseController {
                 String[] fileNameArr = fileName.split("\\.");
                 //获取文件后缀名
                 String suffix = fileNameArr[fileNameArr.length - 1];
-                if (!suffix.equalsIgnoreCase("jpg") && !suffix.equalsIgnoreCase("jpeg") && !suffix.equalsIgnoreCase("png")) {
+                if (!ImageEnum.JPG.equalsIgnoreCase(suffix) &&!ImageEnum.JPEG.equalsIgnoreCase(suffix) &&!ImageEnum.PNG.equalsIgnoreCase(suffix)) {
                     return JsonResult.errorMsg("图片格式不正确");
                 }
                 //face-{userId}.png
@@ -81,7 +85,7 @@ public class CenterUsersController extends BaseController {
                 + "?t=" + DateUtil.getCurrentDateString(DateUtil.DATE_PATTERN);
         // 更新用户头像到数据库
         UsersVO userResult = centerUserAppService.uploadFace(userId, finalUserFaceUrl);
-        setNullVOProperty(userResult);
+        setNullVoProperty(userResult);
         return JsonResult.ok(userResult);
     }
 
@@ -97,7 +101,7 @@ public class CenterUsersController extends BaseController {
         }
         UsersVO userResult = centerUserAppService.update(userId, centerUserBO);
         //todo:后续修改，增加令牌token，整合到redis，分布式会话中，
-        setNullVOProperty(userResult);
+        setNullVoProperty(userResult);
         return JsonResult.ok(userResult);
     }
 }

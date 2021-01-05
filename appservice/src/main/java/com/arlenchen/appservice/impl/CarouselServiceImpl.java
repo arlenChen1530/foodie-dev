@@ -11,18 +11,24 @@ import tk.mybatis.mapper.entity.Example;
 
 import java.util.List;
 
+/**
+ * @author arlenchen
+ */
 @Service
 public class CarouselServiceImpl  implements CarouselAppService {
 
-    @Autowired
-    private CarouselMapper carouselMapper;
+    private final CarouselMapper carouselMapper;
+@Autowired
+    public CarouselServiceImpl(CarouselMapper carouselMapper) {
+        this.carouselMapper = carouselMapper;
+    }
 
     /**
      * 查询所有可显示的轮播图
      * @param isShow 可显示的
      * @return List
      */
-    @Transactional(propagation = Propagation.SUPPORTS)
+    @Transactional(propagation = Propagation.SUPPORTS,rollbackFor = Exception.class)
     @Override
     public List<Carousel> queryAll(Integer isShow) {
         Example example=new Example(Carousel.class);

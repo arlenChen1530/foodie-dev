@@ -2,6 +2,7 @@ package com.arlenchen.pojo.bo;
 
 /**
  * 购物车业务对象BO，
+ * @author arlenchen
  */
 public class ShopCatBO {
     private  String itemId;

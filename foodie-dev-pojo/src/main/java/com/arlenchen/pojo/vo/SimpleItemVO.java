@@ -2,6 +2,9 @@ package com.arlenchen.pojo.vo;
 
 import java.util.Date;
 
+/**
+ * @author arlenchen
+ */
 public class SimpleItemVO {
     private String itemId;
     private String itemName;
@@ -38,5 +41,15 @@ public class SimpleItemVO {
 
     public void setCreatedTime(Date createdTime) {
         this.createdTime = createdTime;
+    }
+
+    @Override
+    public String toString() {
+        return "SimpleItemVO{" +
+                "itemId='" + itemId + '\'' +
+                ", itemName='" + itemName + '\'' +
+                ", itemUrl='" + itemUrl + '\'' +
+                ", createdTime=" + createdTime +
+                '}';
     }
 }

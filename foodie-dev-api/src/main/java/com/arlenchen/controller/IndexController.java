@@ -10,8 +10,6 @@ import com.arlenchen.utils.JsonResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,15 +18,20 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+/**
+ * @author arlenchen
+ */
 @Api(value = "首页信息",tags = "首页信息相关接口")
 @RestController
 @RequestMapping("index")
 public class IndexController {
-    final static Logger logger = LoggerFactory.getLogger(IndexController.class);
-    @Autowired
-    private CarouselAppService carouselAppService;
-    @Autowired
-    private CategoryAppService categoryAppService;
+    private final CarouselAppService carouselAppService;
+    private final CategoryAppService categoryAppService;
+@Autowired
+    public IndexController(CarouselAppService carouselAppService, CategoryAppService categoryAppService) {
+        this.carouselAppService = carouselAppService;
+        this.categoryAppService = categoryAppService;
+    }
 
     @ApiOperation(value = "获取首页轮播图列表",notes = "获取首页轮播图列表",httpMethod = "GET")
     @GetMapping("/carousel")
@@ -50,7 +53,7 @@ public class IndexController {
         if(rootCatId==null){
             return  JsonResult.errorMsg("请选择一级分类");
         }
-        List<CategoryVO> list=categoryAppService.getSubCatLIst(rootCatId);
+        List<CategoryVO> list=categoryAppService.getSubCatList(rootCatId);
         return  JsonResult.ok(list);
     }
     @ApiOperation(value = "查询一级分类下的最新6条商品数据",notes = "查询一级分类下的最新6条商品数据",httpMethod = "GET")

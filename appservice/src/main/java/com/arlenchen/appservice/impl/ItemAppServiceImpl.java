@@ -20,6 +20,9 @@ import tk.mybatis.mapper.entity.Example;
 
 import java.util.*;
 
+/**
+ * @author arlenchen
+ */
 @Service
 public class ItemAppServiceImpl implements ItemAppService {
     private final ItemsMapper itemsMapper;
@@ -46,7 +49,7 @@ public class ItemAppServiceImpl implements ItemAppService {
      * @param itemId 产品id
      * @return items
      */
-    @Transactional(propagation = Propagation.SUPPORTS)
+    @Transactional(propagation = Propagation.SUPPORTS,rollbackFor = Exception.class)
     @Override
     public Items queryItemById(String itemId) {
         return itemsMapper.selectByPrimaryKey(itemId);
@@ -59,7 +62,7 @@ public class ItemAppServiceImpl implements ItemAppService {
      * @param itemId 商品id
      * @return 图片List
      */
-    @Transactional(propagation = Propagation.SUPPORTS)
+    @Transactional(propagation = Propagation.SUPPORTS,rollbackFor = Exception.class)
     @Override
     public List<ItemsImg> queryItemImgList(String itemId) {
         Example example = new Example(ItemsImg.class);
@@ -74,7 +77,7 @@ public class ItemAppServiceImpl implements ItemAppService {
      * @param itemId 商品id
      * @return 图片List
      */
-    @Transactional(propagation = Propagation.SUPPORTS)
+    @Transactional(propagation = Propagation.SUPPORTS,rollbackFor = Exception.class)
     @Override
     public List<ItemsSpec> queryItemSpecList(String itemId) {
         Example example = new Example(ItemsSpec.class);
@@ -89,7 +92,7 @@ public class ItemAppServiceImpl implements ItemAppService {
      * @param itemId 商品id
      * @return 产品参数
      */
-    @Transactional(propagation = Propagation.SUPPORTS)
+    @Transactional(propagation = Propagation.SUPPORTS,rollbackFor = Exception.class)
     @Override
     public ItemsParam queryItemParam(String itemId) {
         Example example = new Example(ItemsSpec.class);
@@ -104,7 +107,7 @@ public class ItemAppServiceImpl implements ItemAppService {
      * @param itemId 商品id
      * @return 评价数量
      */
-    @Transactional(propagation = Propagation.SUPPORTS)
+    @Transactional(propagation = Propagation.SUPPORTS,rollbackFor = Exception.class)
     @Override
     public CommentLevelCountsVO queryCommentCounts(String itemId) {
         CommentLevelCountsVO commentLevelCountsVO = new CommentLevelCountsVO();
@@ -126,10 +129,10 @@ public class ItemAppServiceImpl implements ItemAppService {
      * @param pageSize 每页数量
      * @return List
      */
-    @Transactional(propagation = Propagation.SUPPORTS)
+    @Transactional(propagation = Propagation.SUPPORTS,rollbackFor = Exception.class)
     @Override
     public PageGridResult queryPageComments(String itemId, Integer level,Integer page,Integer pageSize) {
-        Map<String, Object> map = new HashMap<>();
+        Map<String, Object> map = new HashMap<>(16);
         map.put("itemId", itemId);
         map.put("level", level);
         PageHelper.startPage(page,pageSize);
@@ -149,10 +152,10 @@ public class ItemAppServiceImpl implements ItemAppService {
      * @param pageSize 每页数量
      * @return List
      */
-    @Transactional(propagation = Propagation.SUPPORTS)
+    @Transactional(propagation = Propagation.SUPPORTS,rollbackFor = Exception.class)
     @Override
     public PageGridResult searchItems(String keywords, String sort, Integer page, Integer pageSize) {
-        Map<String, Object> map = new HashMap<>();
+        Map<String, Object> map = new HashMap<>(16);
         map.put("keywords", keywords);
         map.put("sort", sort);
         PageHelper.startPage(page,pageSize);
@@ -169,10 +172,10 @@ public class ItemAppServiceImpl implements ItemAppService {
      * @param pageSize 每页数量
      * @return List
      */
-    @Transactional(propagation = Propagation.SUPPORTS)
+    @Transactional(propagation = Propagation.SUPPORTS,rollbackFor = Exception.class)
     @Override
     public PageGridResult searchItemsByThirdCat(Integer catId, String sort, Integer page, Integer pageSize) {
-        Map<String, Object> map = new HashMap<>();
+        Map<String, Object> map = new HashMap<>(16);
         map.put("catId", catId);
         map.put("sort", sort);
         PageHelper.startPage(page,pageSize);
@@ -185,7 +188,7 @@ public class ItemAppServiceImpl implements ItemAppService {
      * @param specIds 规格id
      * @return List<ShopCatVO> 购物车数据
      */
-    @Transactional(propagation = Propagation.SUPPORTS)
+    @Transactional(propagation = Propagation.SUPPORTS,rollbackFor = Exception.class)
     @Override
     public List<ShopCatVO> queryItemsBySpecIds(String specIds) {
         String[] ids=specIds.split(",");
@@ -194,7 +197,7 @@ public class ItemAppServiceImpl implements ItemAppService {
         return itemsMapperCustom.queryItemsBySpecIds(idList);
     }
 
-    @Transactional(propagation = Propagation.SUPPORTS)
+    @Transactional(propagation = Propagation.SUPPORTS,rollbackFor = Exception.class)
     Integer getCommentCounts(String itemId, Integer level) {
         ItemsComments itemsComments = new ItemsComments();
         itemsComments.setItemId(itemId);

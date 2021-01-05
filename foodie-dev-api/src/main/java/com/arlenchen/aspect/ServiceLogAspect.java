@@ -7,8 +7,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
+/**
+ * @author arlenchen
+ */
 @Aspect
-@Component //组件注解
+@Component
 public class ServiceLogAspect {
     public static final Logger logger = LoggerFactory.getLogger(ServiceLogAspect.class);
 
@@ -29,9 +32,9 @@ public class ServiceLogAspect {
      * 第三处 .. 代表该包下以及子包下的所有类方法
      * 第四处 * 代表类名，*表示所有类
      * 第五处 *（..) *代表类中的方法名，(..)表示方法中的任何参数
-     * @param joinPoint
-     * @return
-     * @throws Throwable
+     * @param joinPoint joinPoint
+     * @return Object
+     * @throws Throwable Throwable
      */
     @Around("execution(* com.arlenchen.service.impl..*.*(..))")
     public Object recordTimeLog(ProceedingJoinPoint joinPoint) throws  Throwable {

@@ -3,6 +3,9 @@ package com.arlenchen.mapper;
 
 import org.apache.ibatis.annotations.Param;
 
+/**
+ * @author arlenchen
+ */
 public interface ItemsSpecMapperCustom {
     /**
      * 减少库存

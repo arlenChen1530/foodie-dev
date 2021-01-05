@@ -2,6 +2,7 @@ package com.arlenchen.pojo.bo;
 
 /**
  * 用户新增或修改地址BO
+ * @author arlenchen
  */
 public class AddressBO {
     private String addressId;
@@ -75,5 +76,19 @@ public class AddressBO {
 
     public void setDetail(String detail) {
         this.detail = detail;
+    }
+
+    @Override
+    public String toString() {
+        return "AddressBO{" +
+                "addressId='" + addressId + '\'' +
+                ", userId='" + userId + '\'' +
+                ", receiver='" + receiver + '\'' +
+                ", mobile='" + mobile + '\'' +
+                ", province='" + province + '\'' +
+                ", city='" + city + '\'' +
+                ", district='" + district + '\'' +
+                ", detail='" + detail + '\'' +
+                '}';
     }
 }

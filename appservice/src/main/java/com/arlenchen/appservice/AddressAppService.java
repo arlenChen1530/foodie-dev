@@ -6,6 +6,9 @@ import com.arlenchen.pojo.bo.AddressBO;
 
 import java.util.List;
 
+/**
+ * @author arlenchen
+ */
 public interface AddressAppService {
     /**
      * 根据用户id查询所有收货地址

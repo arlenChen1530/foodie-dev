@@ -15,6 +15,9 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * @author arlenchen
+ */
 @Service
 public class AddressServiceImpl implements AddressAppService {
     private final UserAddressMapper userAddressMapper;
@@ -33,7 +36,7 @@ public class AddressServiceImpl implements AddressAppService {
      * @param userId 用户id
      * @return List
      */
-    @Transactional(propagation = Propagation.SUPPORTS)
+    @Transactional(propagation = Propagation.SUPPORTS, rollbackFor = Exception.class)
     @Override
     public List<UserAddress> queryAll(String userId) {
         UserAddress userAddress = new UserAddress();
@@ -46,7 +49,7 @@ public class AddressServiceImpl implements AddressAppService {
      *
      * @param addressBO 收货地址
      */
-    @Transactional(propagation = Propagation.REQUIRED)
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     @Override
     public void addNewUserAddress(AddressBO addressBO) {
         //1.判断用户是否存在地址，如果不存在，则新增为"默认地址"
@@ -66,7 +69,7 @@ public class AddressServiceImpl implements AddressAppService {
      *
      * @param addressBO 收货地址
      */
-    @Transactional(propagation = Propagation.REQUIRED)
+    @Transactional(propagation = Propagation.REQUIRED,rollbackFor = Exception.class)
     @Override
     public void updateNewUserAddress(AddressBO addressBO) {
         //1.判断用户是否存在地址，如果不存在，则新增为"默认地址"
@@ -84,7 +87,7 @@ public class AddressServiceImpl implements AddressAppService {
      * @param userId    用户id
      * @param addressId 地址id
      */
-    @Transactional(propagation = Propagation.REQUIRED)
+    @Transactional(propagation = Propagation.REQUIRED,rollbackFor = Exception.class)
     @Override
     public void deleteAddress(String userId, String addressId) {
         UserAddress userAddress = new UserAddress();
@@ -99,21 +102,22 @@ public class AddressServiceImpl implements AddressAppService {
      * @param userId    用户id
      * @param addressId 地址id
      */
-    @Transactional(propagation = Propagation.REQUIRED)
+    @Transactional(propagation = Propagation.REQUIRED,rollbackFor = Exception.class)
     @Override
     public void setDefaultAddress(String userId, String addressId) {
         UserAddress userAddress = new UserAddress();
         userAddress.setUserId(userId);
-         List<UserAddress> list =userAddressMapper.select(userAddress);
-         for(UserAddress ua : list){
-             ua.setIsDefault(YesOrNo.NO.type);
-             userAddressMapper.updateByPrimaryKeySelective(ua);
-         }
+        List<UserAddress> list = userAddressMapper.select(userAddress);
+        for (UserAddress ua : list) {
+            ua.setIsDefault(YesOrNo.NO.type);
+            userAddressMapper.updateByPrimaryKeySelective(ua);
+        }
         userAddress.setId(addressId);
         userAddress.setIsDefault(YesOrNo.YES.type);
         userAddress.setUpdatedTime(new Date());
         userAddressMapper.updateByPrimaryKeySelective(userAddress);
     }
+
     /**
      * 根据用户ID和地址id查询地址
      *
@@ -121,7 +125,7 @@ public class AddressServiceImpl implements AddressAppService {
      * @param addressId 地址id
      * @return 地址
      */
-    @Transactional(propagation = Propagation.SUPPORTS)
+    @Transactional(propagation = Propagation.SUPPORTS,rollbackFor = Exception.class)
     @Override
     public UserAddress queryUserAddress(String userId, String addressId) {
         UserAddress userAddress = new UserAddress();

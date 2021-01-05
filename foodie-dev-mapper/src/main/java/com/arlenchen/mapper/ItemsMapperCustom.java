@@ -8,6 +8,9 @@ import org.apache.ibatis.annotations.Param;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * @author arlenchen
+ */
 public interface ItemsMapperCustom {
     /**
      * 根据商品id和级别查询商品评价

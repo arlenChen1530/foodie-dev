@@ -2,6 +2,7 @@ package com.arlenchen.pojo.vo;
 
 /**
  * 用于商品展示评价数量的VO
+ * @author arlenchen
  */
 public class CommentLevelCountsVO {
     private  Integer totalCounts;
@@ -39,5 +40,15 @@ public class CommentLevelCountsVO {
 
     public void setBadCounts(Integer badCounts) {
         this.badCounts = badCounts;
+    }
+
+    @Override
+    public String toString() {
+        return "CommentLevelCountsVO{" +
+                "totalCounts=" + totalCounts +
+                ", goodCounts=" + goodCounts +
+                ", normalCounts=" + normalCounts +
+                ", badCounts=" + badCounts +
+                '}';
     }
 }

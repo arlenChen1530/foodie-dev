@@ -30,7 +30,7 @@ public class ItemImgAppServiceImpl implements ItemImgAppService {
      * @param itemId 商品id
      * @return url
      */
-    @Transactional(propagation = Propagation.SUPPORTS)
+    @Transactional(propagation = Propagation.SUPPORTS,rollbackFor = Exception.class)
     @Override
     public String queryItemMainImdByItemId(String itemId) {
         ItemsImg itemsImg = new ItemsImg();

@@ -4,6 +4,9 @@ import com.arlenchen.pojo.Carousel;
 
 import java.util.List;
 
+/**
+ * @author arlenchen
+ */
 public interface CarouselAppService {
     /**
      * 查询所有可显示的轮播图
