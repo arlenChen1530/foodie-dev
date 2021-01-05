@@ -41,6 +41,10 @@ public class CenterUserBO {
     private Integer sex;
     @ApiModelProperty(value="生日", name="birthday", example="1900-01-01", required = false)
     private Date birthday;
+    /**
+     * 头像
+     */
+    private String face;
 
     public String getUsername() {
         return username;
@@ -112,6 +116,14 @@ public class CenterUserBO {
 
     public void setBirthday(Date birthday) {
         this.birthday = birthday;
+    }
+
+    public String getFace() {
+        return face;
+    }
+
+    public void setFace(String face) {
+        this.face = face;
     }
 
     @Override

@@ -19,4 +19,12 @@ public interface CenterUserAppService {
      * @param centerUserBO 用户信息
      */
     UsersVO update(String userId, CenterUserBO centerUserBO);
+
+    /**
+     * 用户头像上传
+     *
+     * @param userId  用户ID
+     * @param faceUrl 头像
+     */
+    UsersVO uploadFace(String userId, String faceUrl);
 }

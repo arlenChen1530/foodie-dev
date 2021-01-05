@@ -53,4 +53,18 @@ public class CenterUserAppServiceImpl implements CenterUserAppService {
         return queryUsersInfo(userId);
     }
 
+    /**
+     * 用户头像上传
+     *
+     * @param userId  用户ID
+     * @param faceUrl 头像
+     */
+    @Override
+    public UsersVO uploadFace(String userId, String faceUrl) {
+        CenterUserBO centerUserBO =new CenterUserBO();
+        centerUserBO.setFace(faceUrl);
+        centerUserService.update(userId, centerUserBO);
+        return queryUsersInfo(userId);
+    }
+
 }

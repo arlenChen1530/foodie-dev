@@ -18,7 +18,6 @@ public class BaseController {
     //微信支付成功-->支付中心-->平台
     //                      回调通知的url
     String payResultUrl = "http://localhost:8088/orders/notifyMerchantOrderPaid";
- public  static  final  String IMG_USER_FACE_LOCATION="/Users/arlenchen/Documents/project/userFace";
 
     public void setNullProperty(Users userResult) {
         if(userResult!=null){
