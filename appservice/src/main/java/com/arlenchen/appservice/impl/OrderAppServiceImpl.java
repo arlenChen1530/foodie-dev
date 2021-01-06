@@ -86,7 +86,7 @@ public class OrderAppServiceImpl implements OrderAppService {
         orders.setCreatedTime(new Date());
         orders.setUpdatedTime(new Date());
         //2.创建订单子订单信息
-        List<ItemsSpec> specList = itemsSpecService.ListByIds(itemSpecIds);
+        List<ItemsSpec> specList = itemsSpecService.listByIds(itemSpecIds);
         createOrderItemsList(specList, orders);
         //3.创建订单状态信息
         OrderStatus waitPayOrderStatus = new OrderStatus();
@@ -130,7 +130,7 @@ public class OrderAppServiceImpl implements OrderAppService {
      * @param orderId 订单Id
      * @return OrderStatus
      */
-    @Transactional(propagation = Propagation.SUPPORTS)
+    @Transactional(propagation = Propagation.SUPPORTS,rollbackFor = Exception.class)
     @Override
     public OrderStatusVO getPaidOrderInfo(String orderId) {
         OrderStatus orderStatus = orderStatusMapper.selectByPrimaryKey(orderId);
@@ -146,7 +146,7 @@ public class OrderAppServiceImpl implements OrderAppService {
     /**
      * 关闭订单
      */
-    @Transactional(propagation = Propagation.REQUIRED)
+    @Transactional(propagation = Propagation.REQUIRED,rollbackFor = Exception.class)
     @Override
     public void closeOrder() {
         OrderStatus orderStatus = new OrderStatus();
@@ -162,7 +162,7 @@ public class OrderAppServiceImpl implements OrderAppService {
 
     }
 
-    @Transactional(propagation = Propagation.REQUIRED)
+    @Transactional(propagation = Propagation.REQUIRED,rollbackFor = Exception.class)
     void doCloseOrder(String orderId) {
         OrderStatus orderStatus = new OrderStatus();
         orderStatus.setOrderStatus(OrderStatusEnum.CLOSE.type);
@@ -177,7 +177,7 @@ public class OrderAppServiceImpl implements OrderAppService {
      * @param specList 商品规格信息
      * @param orders   订单
      */
-    @Transactional(propagation = Propagation.REQUIRED)
+    @Transactional(propagation = Propagation.REQUIRED,rollbackFor = Exception.class)
     void createOrderItemsList(List<ItemsSpec> specList, Orders orders) {
         //2.1根据规格id，查询规格获取价格
         int totalAmount = 0;

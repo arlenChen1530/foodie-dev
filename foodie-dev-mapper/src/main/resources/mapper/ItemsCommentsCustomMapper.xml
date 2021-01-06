@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.arlenchen.mapper.ItemsCommentsCustomMapper">
+    <select id="saveComments" parameterType="Map">
+        INSERT INTO
+        items_comments
+        (
+        id,
+        user_id,
+        item_id,
+        item_name,
+        item_spec_id,
+        sepc_name,
+        comment_level,
+        content,
+        created_time,
+        updated_time
+        )
+        VALUES
+        <foreach collection="paramsMap.itemsList" item="item" index="index" separator=",">
+            (
+            #{item.id},
+            #{paramsMap.userId},
+            #{item.itemId},
+            #{item.itemName},
+            #{item.itemSpecId},
+            #{item.sepcName},
+            #{item.commentLevel},
+            #{item.content},
+            now(),
+            now()
+            )
+        </foreach>
+    </select>
+    <resultMap id="myComments" type="com.arlenchen.pojo.vo.MyCommentVO">
+        <id column="commentId" jdbcType="VARCHAR" property="commentId"/>
+        <result column="content" jdbcType="VARCHAR" property="content"/>
+        <result column="createdTime" jdbcType="DATE" property="createdTime"/>
+        <result column="itemId" jdbcType="VARCHAR" property="itemId"/>
+        <result column="specName" jdbcType="VARCHAR" property="specName"/>
+        <result column="itemImage" jdbcType="VARCHAR" property="itemImage"/>
+        <result column="itemName" jdbcType="VARCHAR" property="itemName"/>
+    </resultMap>
+    <select id="queryMyComments" parameterType="Map" resultMap="myComments">
+    SELECT
+	    ic.id AS commentId,
+	    ic.content AS content,
+	    ic.created_time AS createdTime,
+	    ic.item_id AS itemId,
+	    ic.sepc_name AS specName,
+	    ii.url AS itemImage,
+	    ic.item_name AS itemName
+    FROM
+	    items_comments ic
+	    LEFT JOIN items_img ii ON ii.item_id = ic.item_id
+    WHERE
+	    ic.user_id = #{paramsMap.userId}
+	    AND ii.is_main = 1
+    ORDER BY
+	    ic.created_time DESC
+    </select>
+</mapper>

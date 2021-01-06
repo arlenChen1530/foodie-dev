@@ -76,7 +76,7 @@ public class UserController  extends  BaseController{
         }
         //4. 实现注册
         JsonResult jsonResult = userService.createUses(userBO);
-        if(!jsonResult.isOK()){
+        if(!jsonResult.isOk()){
              return  jsonResult;
         }
         UsersVO usersVO =(UsersVO)jsonResult.getData();
@@ -102,7 +102,7 @@ public class UserController  extends  BaseController{
         }
         // 1. 实现登录
         JsonResult jsonResult= userService.login(userName, MD5Utils.getMD5Str(passWord));
-        if (!jsonResult.isOK()||jsonResult.getData() == null) {
+        if (!jsonResult.isOk()||jsonResult.getData() == null) {
             return JsonResult.errorMsg("用户名或密码不正确");
         }
         UsersVO usersVO =(UsersVO)jsonResult.getData();

@@ -8,10 +8,10 @@ import com.arlenchen.pojo.vo.CommentLevelCountsVO;
 import com.arlenchen.pojo.vo.ItemCommentVO;
 import com.arlenchen.pojo.vo.SearchItemsVO;
 import com.arlenchen.pojo.vo.ShopCatVO;
+import com.arlenchen.utils.CommonUtils;
 import com.arlenchen.utils.DesensitizationUtil;
 import com.arlenchen.utils.PageGridResult;
 import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -140,7 +140,7 @@ public class ItemAppServiceImpl implements ItemAppService {
         for (ItemCommentVO itemCommentVO : list) {
             itemCommentVO.setNickName(DesensitizationUtil.commonDisplay(itemCommentVO.getNickName()));
         }
-        return  buildPageGridResult(list,page);
+        return  CommonUtils.setterPageGridResult(list,page);
     }
 
     /**
@@ -160,7 +160,7 @@ public class ItemAppServiceImpl implements ItemAppService {
         map.put("sort", sort);
         PageHelper.startPage(page,pageSize);
         List<SearchItemsVO> list=itemsMapperCustom.searchItems(map);
-        return  buildPageGridResult(list,page);
+        return  CommonUtils.setterPageGridResult(list,page);
     }
 
     /**
@@ -180,7 +180,7 @@ public class ItemAppServiceImpl implements ItemAppService {
         map.put("sort", sort);
         PageHelper.startPage(page,pageSize);
         List<SearchItemsVO> list=itemsMapperCustom.searchItemsByThirdCat(map);
-        return  buildPageGridResult(list,page);
+        return  CommonUtils.setterPageGridResult(list,page);
     }
     /**
      * 根据规格id查询购物车中最新的商品数据（用于刷新渲染购物车中的商品数据）
@@ -205,15 +205,5 @@ public class ItemAppServiceImpl implements ItemAppService {
             itemsComments.setCommentLevel(level);
         }
         return itemsCommentsMapper.selectCount(itemsComments);
-    }
-
-    PageGridResult buildPageGridResult(List<?> list,Integer page){
-        PageGridResult pageGridResult =new PageGridResult();
-        PageInfo<?> pageList=new PageInfo<>(list);
-        pageGridResult.setPage(page);
-        pageGridResult.setRows(list);
-        pageGridResult.setTotal(pageList.getPages());
-        pageGridResult.setRecords(pageList.getTotal());
-         return  pageGridResult;
     }
 }

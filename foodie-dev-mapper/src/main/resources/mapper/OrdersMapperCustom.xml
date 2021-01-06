@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.arlenchen.mapper.OrdersMapperCustom">
+    <resultMap id="myOrdersVO" type="com.arlenchen.pojo.vo.MyOrdersVO">
+        <id column="orderId" jdbcType="VARCHAR" property="orderId"/>
+        <result column="createdTime" jdbcType="DATE" property="createdTime"/>
+        <result column="payMethod" jdbcType="INTEGER" property="payMethod"/>
+        <result column="realPayAmount" jdbcType="INTEGER" property="realPayAmount"/>
+        <result column="postAmount" jdbcType="INTEGER" property="postAmount"/>
+        <result column="orderStatus" jdbcType="INTEGER" property="orderStatus"/>
+        <result column="isComment" jdbcType="INTEGER" property="isComment"/>
+        <collection property="itemsList" select="subItemsList" column="orderId"
+                    ofType="com.arlenchen.pojo.vo.MyOrdersItemsVO">
+            <result column="itemId" jdbcType="VARCHAR" property="itemId"/>
+            <result column="itemName" jdbcType="VARCHAR" property="itemName"/>
+            <result column="itemImg" jdbcType="VARCHAR" property="itemImg"/>
+            <result column="itemSpecId" jdbcType="VARCHAR" property="itemSpecId"/>
+            <result column="itemSpecName" jdbcType="VARCHAR" property="itemSpecName"/>
+            <result column="buyCounts" jdbcType="INTEGER" property="buyCounts"/>
+            <result column="price" jdbcType="INTEGER" property="price"/>
+        </collection>
+    </resultMap>
+    <select id="queryOrderList" parameterType="Map" resultMap="myOrdersVO">
+        SELECT
+        od.id AS orderId,
+        od.created_time AS createdTime,
+        od.pay_method AS payMethod,
+        od.real_pay_amount AS realPayAmount,
+        od.post_amount AS postAmount,
+        os.order_status AS orderStatus
+        os.is_comment AS isComment
+        FROM
+        orders od
+        LEFT JOIN order_status os ON od.id = os.order_id
+        WHERE
+        od.user_id = #{paramsMap.userId}
+        AND od.is_delete = 0
+        <if test="paramsMap.orderStatus!=null">
+            AND os.order_status=#{paramsMap.orderStatus}
+        </if>
+        ORDER BY
+        od.updated_time ASC
+    </select>
+    <select id="subItemsList" parameterType="String" resultType="com.arlenchen.pojo.vo.MyOrdersItemsVO">
+        SELECT
+        oi.item_id AS itemId,
+        oi.item_name AS itemName,
+        oi.item_img AS itemImg,
+        oi.item_spec_id AS itemSpecId,
+        oi.item_spec_name AS itemSpecName,
+        oi.buy_counts AS buyCounts,
+        oi.price AS price
+        FROM order_items oi
+        WHERE
+        oi.order_id = #{orderId}
+    </select>
+
+</mapper>

@@ -55,7 +55,7 @@ public class AddressController {
             return JsonResult.errorMsg("");
         }
         JsonResult jsonResult = checkAddress(addressBO);
-        if (!jsonResult.isOK()) {
+        if (!jsonResult.isOk()) {
             return jsonResult;
         }
         addressAppService.addNewUserAddress(addressBO);
@@ -70,7 +70,7 @@ public class AddressController {
             return JsonResult.errorMsg("修改地址错误：addressId不能为空");
         }
         JsonResult jsonResult = checkAddress(addressBO);
-        if (!jsonResult.isOK()) {
+        if (!jsonResult.isOk()) {
             return jsonResult;
         }
         addressAppService.updateNewUserAddress(addressBO);

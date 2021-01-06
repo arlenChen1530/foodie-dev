@@ -8,6 +8,7 @@ import com.arlenchen.pojo.ItemsSpec;
 import com.arlenchen.pojo.vo.CommentLevelCountsVO;
 import com.arlenchen.pojo.vo.ItemInfoVO;
 import com.arlenchen.pojo.vo.ShopCatVO;
+import com.arlenchen.utils.CommonUtils;
 import com.arlenchen.utils.JsonResult;
 import com.arlenchen.utils.PageGridResult;
 import io.swagger.annotations.Api;
@@ -71,7 +72,7 @@ public class ItemsController extends BaseController {
             page = 0;
         }
         if (pageSize == null) {
-            pageSize = COMMENT_PAGE_SIZE;
+            pageSize =  CommonUtils.PAGE_SIZE;
         }
         PageGridResult pageGridResult = itemAppService.queryPageComments(itemId, level, page, pageSize);
         return JsonResult.ok(pageGridResult);
@@ -87,7 +88,7 @@ public class ItemsController extends BaseController {
             page = 0;
         }
         if (pageSize == null) {
-            pageSize = COMMENT_PAGE_SIZE;
+            pageSize = CommonUtils.PAGE_SIZE;
         }
         PageGridResult pageGridResult = itemAppService.searchItems(keywords, sort, page, pageSize);
         return JsonResult.ok(pageGridResult);
@@ -103,7 +104,7 @@ public class ItemsController extends BaseController {
             page = 0;
         }
         if (pageSize == null) {
-            pageSize = COMMENT_PAGE_SIZE;
+            pageSize =  CommonUtils.PAGE_SIZE;
         }
         PageGridResult pageGridResult = itemAppService.searchItemsByThirdCat(catId, sort, page, pageSize);
         return JsonResult.ok(pageGridResult);

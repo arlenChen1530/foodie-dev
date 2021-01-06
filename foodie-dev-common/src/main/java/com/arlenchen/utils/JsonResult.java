@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
  * 
+ * @author arlenchen
  * @Title: JsonResult.java
  * @Package com.arlenchen.utils
  * @Description: 自定义响应数据结构
@@ -21,20 +22,30 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  */
 public class JsonResult {
 
-    // 定义jackson对象
+    /**
+     * 定义jackson对象
+     */
     private static final ObjectMapper MAPPER = new ObjectMapper();
 
-    // 响应业务状态
+    /**
+     * 响应业务状态
+     */
     private Integer status;
 
-    // 响应消息
+    /**
+     * 响应消息
+     */
     private String msg;
 
-    // 响应中的数据
+    /**
+     * 响应中的数据
+     */
     private Object data;
-    
+    /**
+     * 不使用
+     */
     @JsonIgnore
-    private String ok;	// 不使用
+    private String ok;
 
     public static JsonResult build(Integer status, String msg, Object data) {
         return new JsonResult(status, msg, data);
@@ -68,7 +79,7 @@ public class JsonResult {
         return new JsonResult(555, msg, null);
     }
     
-    public static JsonResult errorUserQQ(String msg) {
+    public static JsonResult errorUserQq(String msg) {
         return new JsonResult(556, msg, null);
     }
 
@@ -95,7 +106,7 @@ public class JsonResult {
         this.data = data;
     }
 
-    public Boolean isOK() {
+    public Boolean isOk() {
         return this.status == 200;
     }
 

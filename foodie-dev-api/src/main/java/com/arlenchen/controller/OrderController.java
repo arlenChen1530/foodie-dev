@@ -54,7 +54,7 @@ public class OrderController extends BaseController {
         HttpEntity<MerchantOrdersBO> requestEntity =new HttpEntity<>(merchantOrdersBO,httpHeaders);
         ResponseEntity<JsonResult> resultResponseEntity =template.postForEntity(PAYMENT_URL,requestEntity,JsonResult.class);
         JsonResult payResult= resultResponseEntity.getBody();
-        if(payResult==null||!payResult.isOK()){
+        if(payResult==null||!payResult.isOk()){
              return  JsonResult.errorMsg("支付中心创建订单失败，请联系管理员");
         }
         return JsonResult.ok(orderVO.getOrderId());
@@ -73,5 +73,6 @@ public class OrderController extends BaseController {
         OrderStatusVO orderStatusVO= orderAppService.getPaidOrderInfo(orderId);
         return JsonResult.ok(orderStatusVO);
     }
+
 
 }
