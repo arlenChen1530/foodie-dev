@@ -6,6 +6,9 @@
     <option name="priority" value="Medium" />
     <option name="excludeFilter" value="" />
   </component>
+  <component name="FrameworkDetectionExcludesConfiguration">
+    <file type="web" url="file://$PROJECT_DIR$/foodie-dev-api" />
+  </component>
   <component name="MavenProjectsManager">
     <option name="originalFiles">
       <list>

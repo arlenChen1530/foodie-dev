@@ -11,6 +11,8 @@
 
     <artifactId>foodie-dev-api</artifactId>
 
+    <!-- 打包war [1] -->
+    <packaging>war</packaging>
     <!--    建立依赖-->
     <dependencies>
         <!--        mapper依赖里pojo，pojo依赖了common，mapper是可以使用common中的相应的方法的
