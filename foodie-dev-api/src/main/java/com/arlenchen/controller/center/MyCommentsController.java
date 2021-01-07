@@ -21,11 +21,11 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
- * 个人中心订单
+ * 个人中心评价
  *
  * @author arlenchen
  */
-@Api(value = "个人中心订单", tags = {"个人中心订单相关的接口"})
+@Api(value = "个人中心评价", tags = {"个人中心评价相关的接口"})
 @RestController
 @RequestMapping("mycomments")
 public class MyCommentsController extends BaseController {

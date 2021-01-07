@@ -8,6 +8,8 @@ import com.arlenchen.mapper.OrdersMapperCustom;
 import com.arlenchen.pojo.OrderStatus;
 import com.arlenchen.pojo.Orders;
 import com.arlenchen.pojo.vo.MyOrdersVO;
+import com.arlenchen.pojo.vo.OrderStatusCountsVO;
+import com.arlenchen.pojo.vo.OrderStatusVO;
 import com.arlenchen.service.center.MyOrdersService;
 import com.arlenchen.utils.CommonUtils;
 import com.arlenchen.utils.PageGridResult;
@@ -120,7 +122,7 @@ public class MyOrdersServiceImpl implements MyOrdersService {
         Example.Criteria criteria = example.createCriteria();
         criteria.andEqualTo("id", orderId);
         criteria.andEqualTo("userId", userId);
-        int result = ordersMapper.updateByExampleSelective(orders,example);
+        int result = ordersMapper.updateByExampleSelective(orders, example);
         return result == 1;
     }
 
@@ -139,5 +141,53 @@ public class MyOrdersServiceImpl implements MyOrdersService {
         orders.setUserId(userId);
         orders.setIsDelete(YesOrNo.NO.type);
         return ordersMapper.selectOne(orders);
+    }
+
+    /**
+     * 查询各个状态的订单数量
+     *
+     * @param userId 用户
+     * @return 数量
+     */
+    @Transactional(propagation = Propagation.SUPPORTS, rollbackFor = Exception.class)
+    @Override
+    public OrderStatusCountsVO getMyOrderStatusCount(String userId) {
+        Map<String, Object> map = new HashMap<>(3);
+        map.put("userId", userId);
+        //待付款
+        map.put("orderStatus", OrderStatusEnum.WAIT_PAY.type);
+        int waitPayCounts = ordersMapperCustom.getMyOrderStatusCount(map);
+        //待发货
+        map.put("orderStatus", OrderStatusEnum.WAIT_DELIVER.type);
+        int waitDeliverCounts = ordersMapperCustom.getMyOrderStatusCount(map);
+        //待收货
+        map.put("orderStatus", OrderStatusEnum.WAIT_RECEIVE.type);
+        int waitReceiveCounts = ordersMapperCustom.getMyOrderStatusCount(map);
+        //交易成功(待评价)
+        map.put("orderStatus", OrderStatusEnum.SUCCESS.type);
+        map.put("isComment", YesOrNo.NO.type);
+        int waitCommentCounts = ordersMapperCustom.getMyOrderStatusCount(map);
+        OrderStatusCountsVO orderStatusCountsVO = new OrderStatusCountsVO();
+        orderStatusCountsVO.setWaitPayCounts(waitPayCounts);
+        orderStatusCountsVO.setWaitDeliverCounts(waitDeliverCounts);
+        orderStatusCountsVO.setWaitReceiveCounts(waitReceiveCounts);
+        orderStatusCountsVO.setWaitCommentCounts(waitCommentCounts);
+        return orderStatusCountsVO;
+    }
+
+    /**
+     * 查询订单动向
+     *
+     * @param userId 用户
+     * @return 订单动向
+     */
+    @Transactional(propagation = Propagation.SUPPORTS, rollbackFor = Exception.class)
+    @Override
+    public PageGridResult getMyOrderTend(String userId, Integer page, Integer pageSize) {
+        Map<String, Object> map = new HashMap<>(3);
+        map.put("userId", userId);
+        PageHelper.startPage(page, pageSize);
+        List<OrderStatusVO> list = ordersMapperCustom.getMyOrderTend(map);
+        return CommonUtils.setterPageGridResult(list, page);
     }
 }

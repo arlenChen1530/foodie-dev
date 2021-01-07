@@ -2,6 +2,8 @@ package com.arlenchen.controller.center;
 
 import com.arlenchen.appservice.center.MyOrderAppService;
 import com.arlenchen.controller.BaseController;
+import com.arlenchen.pojo.vo.OrderStatusCountsVO;
+import com.arlenchen.pojo.vo.OrderStatusVO;
 import com.arlenchen.utils.CommonUtils;
 import com.arlenchen.utils.JsonResult;
 import com.arlenchen.utils.PageGridResult;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 
 /**
  * 个人中心订单
@@ -92,6 +95,26 @@ public class MyOrderController extends BaseController {
             return JsonResult.errorMsg("订单删除失败！");
         }
         return JsonResult.ok();
+    }
+
+    @ApiOperation(value = "查询各个状态的订单数量", notes = "查询各个状态的订单数量", httpMethod = "POST")
+    @PostMapping("/statusCounts")
+    public JsonResult statusCounts(
+            @ApiParam(name = "userId", value = "用户id", required = true) @RequestParam String userId,
+            HttpServletRequest request, HttpServletResponse response) {
+        OrderStatusCountsVO orderStatusCountsVO = myOrderAppService.getMyOrderStatusCount(userId);
+        return JsonResult.ok(orderStatusCountsVO);
+    }
+
+    @ApiOperation(value = "查询订单动向", notes = "查询订单动向", httpMethod = "POST")
+    @PostMapping("/trend")
+    public JsonResult getMyOrderTrend(
+            @ApiParam(name = "userId", value = "用户id", required = true) @RequestParam String userId,
+            @ApiParam(name = "page", value = "分页") @RequestParam(required = false, defaultValue = "0") Integer page,
+            @ApiParam(name = "pageSize", value = "分页") @RequestParam(required = false, defaultValue = "20") Integer pageSize,
+            HttpServletRequest request, HttpServletResponse response) {
+        PageGridResult  pageGridResult = myOrderAppService.getMyOrderTend(userId,page,pageSize);
+        return JsonResult.ok(pageGridResult);
     }
 
 }

@@ -1,7 +1,11 @@
 package com.arlenchen.appservice.center;
 
+import com.arlenchen.pojo.vo.OrderStatusCountsVO;
+import com.arlenchen.pojo.vo.OrderStatusVO;
 import com.arlenchen.utils.JsonResult;
 import com.arlenchen.utils.PageGridResult;
+
+import java.util.List;
 
 /**
  * @author arlenchen
@@ -50,4 +54,22 @@ public interface MyOrderAppService {
      * @return Orders
      */
     JsonResult queryMyOrder(String orderId, String userId);
+
+    /**
+     * 查询各个状态的订单数量
+     *
+     * @param userId 用户
+     * @return 数量
+     */
+    OrderStatusCountsVO getMyOrderStatusCount(String userId);
+
+    /**
+     * 查询订单动向
+     *
+     * @param userId 用户
+     * @param page        分页
+     * @param pageSize    分页
+     * @return 订单动向
+     */
+    PageGridResult getMyOrderTend(String userId, Integer page, Integer pageSize);
 }

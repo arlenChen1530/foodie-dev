@@ -3,6 +3,8 @@ package com.arlenchen.appservice.impl.center;
 import com.arlenchen.appservice.center.MyOrderAppService;
 import com.arlenchen.pojo.Orders;
 import com.arlenchen.pojo.vo.MyOrdersVO;
+import com.arlenchen.pojo.vo.OrderStatusCountsVO;
+import com.arlenchen.pojo.vo.OrderStatusVO;
 import com.arlenchen.service.center.MyOrdersService;
 import com.arlenchen.utils.JsonResult;
 import com.arlenchen.utils.PageGridResult;
@@ -11,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 /**
  * @author arlenchen
@@ -61,7 +65,7 @@ public class MyOrderAppServiceImpl implements MyOrderAppService {
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     @Override
     public boolean confirmReceive(String orderId) {
-         return myOrdersService.confirmReceive(orderId);
+        return myOrdersService.confirmReceive(orderId);
     }
 
     /**
@@ -87,13 +91,36 @@ public class MyOrderAppServiceImpl implements MyOrderAppService {
     @Transactional(propagation = Propagation.SUPPORTS, rollbackFor = Exception.class)
     @Override
     public JsonResult queryMyOrder(String orderId, String userId) {
-        Orders orders= myOrdersService.queryMyOrder(orderId, userId);
+        Orders orders = myOrdersService.queryMyOrder(orderId, userId);
         if (orders == null) {
             return JsonResult.errorMsg("订单不存在！");
         }
         MyOrdersVO myOrdersVO = new MyOrdersVO();
-        BeanUtils.copyProperties(orders,myOrdersVO);
+        BeanUtils.copyProperties(orders, myOrdersVO);
         return JsonResult.ok(myOrdersVO);
     }
 
+    /**
+     * 查询各个状态的订单数量
+     *
+     * @param userId 用户
+     * @return 数量
+     */
+    @Transactional(propagation = Propagation.SUPPORTS, rollbackFor = Exception.class)
+    @Override
+    public OrderStatusCountsVO getMyOrderStatusCount(String userId) {
+        return myOrdersService.getMyOrderStatusCount(userId);
+    }
+
+    /**
+     * 查询订单动向
+     *
+     * @param userId 用户
+     * @return 订单动向
+     */
+    @Transactional(propagation = Propagation.SUPPORTS, rollbackFor = Exception.class)
+    @Override
+    public PageGridResult getMyOrderTend(String userId, Integer page, Integer pageSize) {
+        return myOrdersService.getMyOrderTend(userId,page,pageSize);
+    }
 }
