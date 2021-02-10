@@ -11,6 +11,7 @@ import com.arlenchen.mapper.OrderStatusMapper;
 import com.arlenchen.mapper.OrdersMapper;
 import com.arlenchen.pojo.*;
 import com.arlenchen.pojo.bo.MerchantOrdersBO;
+import com.arlenchen.pojo.bo.ShopCatBO;
 import com.arlenchen.pojo.bo.SubmitOrderBO;
 import com.arlenchen.pojo.vo.OrderStatusVO;
 import com.arlenchen.pojo.vo.OrderVO;
@@ -23,6 +24,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -55,11 +57,14 @@ public class OrderAppServiceImpl implements OrderAppService {
     /**
      * 用户下单
      *
+     * @param list          购物车数据
      * @param submitOrderBo 下单数据
+     * @return 下单结果
      */
-    @Transactional(propagation = Propagation.REQUIRED,rollbackFor = Exception.class)
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     @Override
-    public OrderVO createOrder(SubmitOrderBO submitOrderBo) {
+    public OrderVO createOrder(List<ShopCatBO> list, SubmitOrderBO submitOrderBo) {
+        OrderVO orderVO = new OrderVO();
         String userId = submitOrderBo.getUserId();
         String itemSpecIds = submitOrderBo.getItemSpecIds();
         String addressId = submitOrderBo.getAddressId();
@@ -87,7 +92,7 @@ public class OrderAppServiceImpl implements OrderAppService {
         orders.setUpdatedTime(new Date());
         //2.创建订单子订单信息
         List<ItemsSpec> specList = itemsSpecService.listByIds(itemSpecIds);
-        createOrderItemsList(specList, orders);
+        createOrderItemsList(list, specList, orders,orderVO);
         //3.创建订单状态信息
         OrderStatus waitPayOrderStatus = new OrderStatus();
         waitPayOrderStatus.setOrderId(orderId);
@@ -102,7 +107,6 @@ public class OrderAppServiceImpl implements OrderAppService {
         merchantOrdersBO.setMerchantUserId(userId);
         merchantOrdersBO.setPayMethod(payMethod);
         merchantOrdersBO.setReturnUrl("");
-        OrderVO orderVO = new OrderVO();
         orderVO.setOrderId(orderId);
         orderVO.setMerchantOrdersBO(merchantOrdersBO);
         return orderVO;
@@ -114,7 +118,7 @@ public class OrderAppServiceImpl implements OrderAppService {
      * @param orderId     订单Id
      * @param orderStatus 订单状态
      */
-    @Transactional(propagation = Propagation.REQUIRED,rollbackFor = Exception.class)
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     @Override
     public void updateOrderStatus(String orderId, Integer orderStatus) {
         OrderStatus paidStatus = new OrderStatus();
@@ -130,7 +134,7 @@ public class OrderAppServiceImpl implements OrderAppService {
      * @param orderId 订单Id
      * @return OrderStatus
      */
-    @Transactional(propagation = Propagation.SUPPORTS,rollbackFor = Exception.class)
+    @Transactional(propagation = Propagation.SUPPORTS, rollbackFor = Exception.class)
     @Override
     public OrderStatusVO getPaidOrderInfo(String orderId) {
         OrderStatus orderStatus = orderStatusMapper.selectByPrimaryKey(orderId);
@@ -146,7 +150,7 @@ public class OrderAppServiceImpl implements OrderAppService {
     /**
      * 关闭订单
      */
-    @Transactional(propagation = Propagation.REQUIRED,rollbackFor = Exception.class)
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     @Override
     public void closeOrder() {
         OrderStatus orderStatus = new OrderStatus();
@@ -162,8 +166,8 @@ public class OrderAppServiceImpl implements OrderAppService {
 
     }
 
-    @Transactional(propagation = Propagation.REQUIRED,rollbackFor = Exception.class)
-    void doCloseOrder(String orderId) {
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+     void doCloseOrder(String orderId) {
         OrderStatus orderStatus = new OrderStatus();
         orderStatus.setOrderStatus(OrderStatusEnum.CLOSE.type);
         orderStatus.setCloseTime(new Date());
@@ -177,14 +181,17 @@ public class OrderAppServiceImpl implements OrderAppService {
      * @param specList 商品规格信息
      * @param orders   订单
      */
-    @Transactional(propagation = Propagation.REQUIRED,rollbackFor = Exception.class)
-    void createOrderItemsList(List<ItemsSpec> specList, Orders orders) {
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
+     void createOrderItemsList(List<ShopCatBO> list, List<ItemsSpec> specList, Orders orders,OrderVO orderVO) {
         //2.1根据规格id，查询规格获取价格
         int totalAmount = 0;
         int realPayAmount = 0;
+        List<ShopCatBO> toBeRemoveShopCartList=new ArrayList<>();
         for (ItemsSpec itemsSpec : specList) {
-            //todo:整个redis后，商品购买的数量重新从redis中获取
-            int buyCount = 1;
+            //整合redis后，商品购买的数量重新从redis中获取
+            ShopCatBO shopCatBO =getBuyCountsFormShopCart(list,itemsSpec.getId());
+            toBeRemoveShopCartList.add(shopCatBO);
+            int buyCount = shopCatBO==null?1:shopCatBO.getBuyCounts();
             totalAmount += itemsSpec.getPriceNormal() != null ? itemsSpec.getPriceNormal() * buyCount : 0;
             realPayAmount += itemsSpec.getPriceDiscount() != null ? itemsSpec.getPriceDiscount() * buyCount : 0;
             //2.2根据商品id获取商品信息和主图
@@ -207,7 +214,23 @@ public class OrderAppServiceImpl implements OrderAppService {
             //2.4在用户提交订单以后，规格表中需要扣除库存
             itemsSpecService.decreaseItemSpecStock(itemsSpec.getId(), buyCount);
         }
+        orderVO.setToBeRemoveShopCartList(toBeRemoveShopCartList);
         orders.setTotalAmount(totalAmount);
         orders.setRealPayAmount(realPayAmount);
+    }
+
+    /**
+     *  从redis只的购物车里获取商品，目的：counts
+     * @param list 购物车里商品
+     * @param specId  规格
+     * @return 商品
+     */
+    private ShopCatBO getBuyCountsFormShopCart(List<ShopCatBO> list, String specId) {
+        for (ShopCatBO shopCatBO : list) {
+            if (shopCatBO.getSpecId().equals(specId)) {
+                return shopCatBO;
+            }
+        }
+        return  null;
     }
 }

@@ -13,7 +13,7 @@ import java.util.Map;
  */
 @RestController
 public class BaseController {
-    public static final String FOODIE_SHOP_CAT = "shopcat";
+    public static final String FOODIE_SHOP_CART = "shopcart";
     public static final Integer COMMENT_PAGE_SIZE = 10;
     public static final Integer PAGE_SIZE = 20;
     public static final String PAYMENT_URL = "http://localhost:8088/orders/notifyMerchantOrderPaid";

@@ -1,6 +1,9 @@
 package com.arlenchen.pojo.vo;
 
 import com.arlenchen.pojo.bo.MerchantOrdersBO;
+import com.arlenchen.pojo.bo.ShopCatBO;
+
+import java.util.List;
 
 /**
  * @author arlenchen
@@ -9,6 +12,7 @@ public class OrderVO {
 
     private String orderId;
     private MerchantOrdersBO merchantOrdersBO;
+    private List<ShopCatBO> toBeRemoveShopCartList;
 
     public String getOrderId() {
         return orderId;
@@ -24,6 +28,14 @@ public class OrderVO {
 
     public void setMerchantOrdersBO(MerchantOrdersBO merchantOrdersBO) {
         this.merchantOrdersBO = merchantOrdersBO;
+    }
+
+    public List<ShopCatBO> getToBeRemoveShopCartList() {
+        return toBeRemoveShopCartList;
+    }
+
+    public void setToBeRemoveShopCartList(List<ShopCatBO> toBeRemoveShopCartList) {
+        this.toBeRemoveShopCartList = toBeRemoveShopCartList;
     }
 
     @Override
